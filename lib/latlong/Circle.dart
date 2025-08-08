@@ -35,12 +35,12 @@ class Circle {
 
   /// Checks if a [point] is inside the given [Circle]
   ///
-  ///     final Circle circle = new Circle(new LatLng(0.0,0.0), 111319.0);
-  ///     final LatLng newPos = new LatLng(1.0,0.0);
+  ///     final Circle circle = Circle(LatLng(0.0,0.0), 111319.0);
+  ///     final LatLng newPos = LatLng(1.0,0.0);
   ///
   ///     expect(circle.isPointInside(newPos),isTrue);
   ///
-  ///     final Circle circle2 = new Circle(new LatLng(0.0,0.0), 111318.0);
+  ///     final Circle circle2 = Circle(LatLng(0.0,0.0), 111318.0);
   ///
   ///     expect(circle2.isPointInside(newPos),isFalse);
   ///
