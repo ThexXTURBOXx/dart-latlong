@@ -230,7 +230,7 @@ class Path<T extends LatLng> {
   /// Sums up all the distances on the path
   ///
   ///     final Path path = Path.from(route);
-  ///     print(path.length);
+  ///     print(path.distance);
   ///
   double get distance {
     final tempCoordinates = List<T>.from(_coordinates);

@@ -21,7 +21,7 @@ part of latlong2;
 
 /// Coordinates in Degrees
 ///
-///     final Location location = Location(10.000002,12.00001);
+///     final LatLng location = LatLng(10.000002, 12.00001);
 ///
 class LatLng {
   // final Logger _logger = new Logger('latlong2.LatLng');

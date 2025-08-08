@@ -26,11 +26,11 @@ part of latlong2;
 ///      final Distance distance = Distance();
 ///
 ///      // km = 423
-///      final int km = distance.as(LengthUnit.Kilometer,
+///      final double km = distance.as(LengthUnit.Kilometer,
 ///          LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 ///      // meter = 422592
-///      final int meter = distance(LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
+///      final double meter = distance(LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 class Distance implements DistanceCalculator {
   // final Logger _logger = new Logger('latlong2.Distance');
@@ -75,7 +75,8 @@ class Distance implements DistanceCalculator {
 
   /// Converts the distance to the given [LengthUnit]
   ///
-  ///     final int km = distance.as(LengthUnit.Kilometer,
+  ///     const Distance distance = Distance();
+  ///     final double km = distance.as(LengthUnit.Kilometer,
   ///          LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
   ///
   double as(final LengthUnit unit, final LatLng p1, final LatLng p2) {
@@ -125,7 +126,7 @@ class Distance implements DistanceCalculator {
   ///
   ///     final Distance distance = const Distance();
   ///
-  ///     final num distanceInMeter = (earthRadius * math.PI / 4).round();
+  ///     final num distanceInMeter = (earthRadius * pi / 4).round();
   ///
   ///     final p1 = LatLng(0.0, 0.0);
   ///     final p2 = distance.offset(p1, distanceInMeter, 180);
