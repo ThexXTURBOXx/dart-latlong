@@ -34,6 +34,6 @@ void main() {
   final point1 = LatLng(double.nan, 0.0);
   final point2 = distance.offset(point1, distanceInMeter, 180);
 
-  var meterDistance = distance.as(LengthUnit.Meter,point1, point2);
+  var meterDistance = distance.as(LengthUnit.Meter, point1, point2);
   print(meterDistance);
 }
