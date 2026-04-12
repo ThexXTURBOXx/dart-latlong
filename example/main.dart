@@ -1,12 +1,12 @@
-import 'package:latlong2/latlong.dart';
+import 'dart:math';
 
-const EARTH_RADIUS = 6371000.0;
+import 'package:latlong2/latlong2.dart';
 
 void main() {
   var distance = Distance();
 
   // km = 423
-  final km = distance.as(LengthUnit.Kilometer, LatLng(52.518611, 13.408056),
+  final km = distance.as(LengthUnit.kilometer, LatLng(52.518611, 13.408056),
       LatLng(51.519475, 7.46694444));
 
   // meter = 422591.551
@@ -34,6 +34,6 @@ void main() {
   final point1 = LatLng(double.nan, 0.0);
   final point2 = distance.offset(point1, distanceInMeter, 180);
 
-  var meterDistance = distance.as(LengthUnit.Meter, point1, point2);
+  var meterDistance = distance.as(LengthUnit.meter, point1, point2);
   print(meterDistance);
 }

@@ -25,8 +25,6 @@
 ///
 /// Java way: [A Catmull Rom Spline (curve) Implementation in Java](http://hawkesy.blogspot.co.at/2010/05/catmull-rom-spline-curve-implementation.html)
 ///
-library spline;
+library;
 
-//import 'package:logging/logging.dart';
-
-part 'spline/CatmullRomSpline.dart';
+export 'spline/catmull_rom_spline.dart';

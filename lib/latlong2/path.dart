@@ -17,9 +17,12 @@
  * limitations under the License.
  */
 
-part of latlong2;
+import 'dart:math';
 
-/// Necessary for creating new instances T extends LatLng (Path<T extends LatLng>)
+import 'package:latlong2/latlong2.dart';
+import 'package:latlong2/spline.dart';
+
+/// Necessary for creating new instances T extends LatLng (Path&lt;T extends LatLng&rt;)
 ///
 ///     class Location extends LatLng {
 ///         ....
@@ -76,6 +79,7 @@ class Path<T extends LatLng> {
   }
 
   T get first => _coordinates.first;
+
   T get last => _coordinates.last;
 
   /// Splits the path into even sections.
@@ -256,23 +260,23 @@ class Path<T extends LatLng> {
 
     double lat, lon, hyp;
 
-    coordinates.forEach((final T coordinate) {
+    for (final coordinate in coordinates) {
       lat = coordinate.latitudeInRad;
       lon = coordinate.longitudeInRad;
 
-      X += math.cos(lat) * math.cos(lon);
-      Y += math.cos(lat) * math.sin(lon);
-      Z += math.sin(lat);
-    });
+      X += cos(lat) * cos(lon);
+      Y += cos(lat) * sin(lon);
+      Z += sin(lat);
+    }
 
     final nrOfCoordinates = coordinates.length;
     X = X / nrOfCoordinates;
     Y = Y / nrOfCoordinates;
     Z = Z / nrOfCoordinates;
 
-    lon = math.atan2(Y, X);
-    hyp = math.sqrt(X * X + Y * Y);
-    lat = math.atan2(Z, hyp);
+    lon = atan2(Y, X);
+    hyp = sqrt(X * X + Y * Y);
+    lat = atan2(Z, hyp);
 
     return _latLngFactory(round(radianToDeg(lat)), round(radianToDeg(lon)));
   }

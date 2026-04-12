@@ -38,21 +38,18 @@
 ///
 /// ![Map](http://www.isobudgets.com/wp-content/uploads/2014/03/latitude-longitude.jpg)
 ///
-library latlong2;
+library;
 
-import 'dart:math' as math;
+import 'dart:math';
 
-import 'package:intl/intl.dart';
-import 'package:latlong2/spline.dart';
-
-part 'latlong/Circle.dart';
-part 'latlong/Distance.dart';
-part 'latlong/LatLng.dart';
-part 'latlong/LengthUnit.dart';
-part 'latlong/Path.dart';
-part 'latlong/calculator/Haversine.dart';
-part 'latlong/calculator/Vincenty.dart';
-part 'latlong/interfaces.dart';
+export 'latlong2/calculator/haversine.dart';
+export 'latlong2/calculator/vincenty.dart';
+export 'latlong2/circle.dart';
+export 'latlong2/distance.dart';
+export 'latlong2/interfaces.dart';
+export 'latlong2/lat_lng.dart';
+export 'latlong2/length_unit.dart';
+export 'latlong2/path.dart';
 
 /// Equator radius in meter (WGS84 ellipsoid)
 const double equatorRadius = 6378137.0;
@@ -66,9 +63,6 @@ const double flattening = 1 / 298.257223563;
 /// Earth radius in meter
 const double earthRadius = equatorRadius;
 
-/// The PI constant.
-const double pi = math.pi;
-
 /// Converts degree to radian
 double degToRadian(final double deg) => deg * (pi / 180.0);
 
@@ -77,7 +71,7 @@ double radianToDeg(final double rad) => rad * (180.0 / pi);
 
 /// Rounds [value] to given number of [decimals]
 double round(final double value, {final int decimals = 6}) =>
-    (value * math.pow(10, decimals)).round() / math.pow(10, decimals);
+    (value * pow(10, decimals)).round() / pow(10, decimals);
 
 /// Convert a bearing to be within the 0 to +360 degrees range.
 /// Compass bearing is in the rangen 0° ... 360°
@@ -96,16 +90,16 @@ String decimal2sexagesimal(final double dec) {
 
   final absDec = dec.abs();
   final deg = absDec.floor();
-  buf.write(deg.toString() + '°');
+  buf.write('$deg°');
 
   final mins = (absDec - deg) * 60.0;
   final min = mins.floor();
-  buf.write(' ' + zeroPad(min) + "'");
+  buf.write(" ${zeroPad(min)}'");
 
   final secs = (mins - mins.floorToDouble()) * 60.0;
   final sec = secs.floor();
   final frac = ((secs - secs.floorToDouble()) * 100.0).round();
-  buf.write(' ' + zeroPad(sec) + '.' + zeroPad(frac) + '"');
+  buf.write(' ${zeroPad(sec)}.${zeroPad(frac)}"');
 
   return buf.toString();
 }

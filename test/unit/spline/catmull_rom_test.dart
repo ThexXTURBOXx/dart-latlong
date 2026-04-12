@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:latlong2/spline.dart';
+import 'package:test/test.dart';
 // import 'package:logging/logging.dart';
 
 // Browser

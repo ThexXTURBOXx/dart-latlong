@@ -17,7 +17,9 @@
  * limitations under the License.
  */
 
-part of latlong2;
+import 'dart:math';
+
+import 'package:latlong2/latlong2.dart';
 
 /// Calculates the distance between points.
 ///
@@ -33,10 +35,8 @@ part of latlong2;
 ///      final double meter = distance(LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 class Distance implements DistanceCalculator {
-  // final Logger _logger = new Logger('latlong2.Distance');
-
   final double _radius;
-  final _roundResult;
+  final bool _roundResult;
   final DistanceCalculator _calculator;
 
   const Distance(
@@ -87,7 +87,7 @@ class Distance implements DistanceCalculator {
       return 0.0;
     }
 
-    return _round(LengthUnit.Meter.to(unit, dist));
+    return _round(LengthUnit.meter.to(unit, dist));
   }
 
   /// Computes the distance between two points.
@@ -111,11 +111,11 @@ class Distance implements DistanceCalculator {
   double bearing(final LatLng p1, final LatLng p2) {
     final diffLongitude = p2.longitudeInRad - p1.longitudeInRad;
 
-    final y = math.sin(diffLongitude);
-    final x = math.cos(p1.latitudeInRad) * math.tan(p2.latitudeInRad) -
-        math.sin(p1.latitudeInRad) * math.cos(diffLongitude);
+    final y = sin(diffLongitude);
+    final x = cos(p1.latitudeInRad) * tan(p2.latitudeInRad) -
+        sin(p1.latitudeInRad) * cos(diffLongitude);
 
-    return radianToDeg(math.atan2(y, x));
+    return radianToDeg(atan2(y, x));
   }
 
   /// Returns a destination point based on the given [distance] and [bearing]
@@ -147,8 +147,8 @@ class Distance implements DistanceCalculator {
 ///     final Distance distance = const Distance(calculator: const Vincenty());
 ///
 class DistanceVincenty extends Distance {
-  const DistanceVincenty({final bool roundResult = true})
-      : super(roundResult: roundResult, calculator: const Vincenty());
+  const DistanceVincenty({super.roundResult})
+      : super(calculator: const Vincenty());
 
   /// Radius must be greater than 0.
   DistanceVincenty.withRadius(final double radius,
@@ -166,8 +166,8 @@ class DistanceVincenty extends Distance {
 ///     final Distance distance = const Distance(calculator: const Haversine());
 ///
 class DistanceHaversine extends Distance {
-  const DistanceHaversine({final bool roundResult = true})
-      : super(roundResult: roundResult, calculator: const Haversine());
+  const DistanceHaversine({super.roundResult})
+      : super(calculator: const Haversine());
 
   /// Radius must be greater than 0.
   DistanceHaversine.withRadius(final double radius,

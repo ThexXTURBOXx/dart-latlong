@@ -1,7 +1,8 @@
 //@TestOn("content-shell")
-import 'package:test/test.dart';
+import 'dart:math';
 
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong2.dart';
+import 'package:test/test.dart';
 // import 'package:logging/logging.dart';
 
 // Browser
@@ -38,12 +39,12 @@ void main() {
       expect(distance(p1, p2) ~/ 1000, equals(10001));
 
       expect(
-          LengthUnit.Meter.to(LengthUnit.Kilometer, distance(p1, p2)).round(),
+          LengthUnit.meter.to(LengthUnit.kilometer, distance(p1, p2)).round(),
           equals(10002));
 
       // rounds to 10002
-      expect(distance.as(LengthUnit.Kilometer, p1, p2), equals(10002));
-      expect(distance.as(LengthUnit.Meter, p1, p2), equals(10001966));
+      expect(distance.as(LengthUnit.kilometer, p1, p2), equals(10002));
+      expect(distance.as(LengthUnit.meter, p1, p2), equals(10001966));
     }); // end of 'Distance between 0 and 90.0' test
 
     test('> Distance between 0 and 90.0 is 10001.96572931165 km ', () {
@@ -52,7 +53,7 @@ void main() {
       final p2 = LatLng(90.0, 0.0);
 
       expect(
-          distance.as(LengthUnit.Kilometer, p1, p2), equals(10001.96572931165));
+          distance.as(LengthUnit.kilometer, p1, p2), equals(10001.96572931165));
     }); // end of 'Round' test
 
     test('> distance between 0,-180 and 0,180 is 0', () {
@@ -73,7 +74,7 @@ void main() {
             422592);
 
         expect(
-            distance.as(LengthUnit.Kilometer, LatLng(52.518611, 13.408056),
+            distance.as(LengthUnit.kilometer, LatLng(52.518611, 13.408056),
                 LatLng(51.519475, 7.46694444)),
             423);
       });

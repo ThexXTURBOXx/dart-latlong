@@ -17,10 +17,26 @@
  * limitations under the License.
  */
 
-part of latlong2;
+class LengthUnit {
+  static const LengthUnit millimeter = LengthUnit(1000.0);
+  static const LengthUnit centimeter = LengthUnit(100.0);
+  static const LengthUnit meter = LengthUnit(1.0);
+  static const LengthUnit kilometer = LengthUnit(0.001);
+  static const LengthUnit mile = LengthUnit(0.0006213712);
 
-abstract class DistanceCalculator {
-  double distance(final LatLng p1, final LatLng p2);
-  LatLng offset(
-      final LatLng from, final double distanceInMeter, final double bearing);
+  final double scaleFactor;
+
+  const LengthUnit(this.scaleFactor);
+
+  double to(final LengthUnit unit, final double value) {
+    if (unit.scaleFactor == scaleFactor) {
+      return value;
+    }
+
+    // Convert to primary unit.
+    final primaryValue = value / scaleFactor;
+
+    // Convert to destination unit.
+    return primaryValue * unit.scaleFactor;
+  }
 }

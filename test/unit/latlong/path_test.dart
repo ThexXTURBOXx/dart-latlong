@@ -1,7 +1,6 @@
 //@TestOn("content-shell")
+import 'package:latlong2/latlong2.dart';
 import 'package:test/test.dart';
-
-import 'package:latlong2/latlong.dart';
 // import 'package:logging/logging.dart';
 
 // Browser
@@ -200,7 +199,7 @@ void main() {
       final path = Path.from(route);
 
       expect(
-          round(LengthUnit.Meter.to(LengthUnit.Kilometer, path.distance),
+          round(LengthUnit.meter.to(LengthUnit.kilometer, path.distance),
               decimals: 3),
           3.377);
     }); // end of 'Path length should be 3.377km' test

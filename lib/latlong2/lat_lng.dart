@@ -17,7 +17,10 @@
  * limitations under the License.
  */
 
-part of latlong2;
+import 'dart:math';
+
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong2.dart';
 
 /// Coordinates in Degrees
 ///
@@ -42,8 +45,8 @@ class LatLng {
       longitude <= 180;
 
   LatLng.fromJson(Map<String, dynamic> json)
-      : latitude = (json['coordinates'][1] as num).toDouble(),
-        longitude = (json['coordinates'][0] as num).toDouble();
+      : this((json['coordinates'][1] as num).toDouble(),
+            (json['coordinates'][0] as num).toDouble());
 
   Map<String, dynamic> toJson() => {
         'coordinates': [longitude, latitude]
@@ -62,8 +65,8 @@ class LatLng {
   ///     51.519475, -19.37555556
   ///
   factory LatLng.fromSexagesimal(final String str) {
-    double _latitude = 0.0;
-    double _longitude = 0.0;
+    double lat = 0.0;
+    double lng = 0.0;
     // try format '''47° 09' 53.57" N, 8° 32' 09.04" E'''
     var splits = str.split(',');
     if (splits.length != 2) {
@@ -77,15 +80,15 @@ class LatLng {
         }
       }
     }
-    _latitude = sexagesimal2decimal(splits[0]);
-    _longitude = sexagesimal2decimal(splits[1]);
+    lat = sexagesimal2decimal(splits[0]);
+    lng = sexagesimal2decimal(splits[1]);
     if (str.contains('S')) {
-      _latitude = -_latitude;
+      lat = -lat;
     }
     if (str.contains('W')) {
-      _longitude = -_longitude;
+      lng = -lng;
     }
-    return LatLng(_latitude, _longitude);
+    return LatLng(lat, lng);
   }
 
   /// Converts lat/long values into sexagesimal
@@ -118,5 +121,5 @@ class LatLng {
 
   /// No qualifier for top level functions in Dart. Had to copy this function
   double _round(final double value, {final int decimals = 6}) =>
-      (value * math.pow(10, decimals)).round() / math.pow(10, decimals);
+      (value * pow(10, decimals)).round() / pow(10, decimals);
 }

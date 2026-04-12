@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-part of latlong2;
+import 'package:latlong2/latlong2.dart';
 
 /// Circle-base GEO algorithms.
 ///
@@ -51,5 +51,5 @@ class Circle {
     return dist <= radius;
   }
 
-  //- private -----------------------------------------------------------------------------------
+//- private -----------------------------------------------------------------------------------
 }

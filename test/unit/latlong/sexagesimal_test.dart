@@ -1,7 +1,6 @@
 //@TestOn("content-shell")
+import 'package:latlong2/latlong2.dart';
 import 'package:test/test.dart';
-
-import 'package:latlong2/latlong.dart';
 // import 'package:logging/logging.dart';
 
 // Browser

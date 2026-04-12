@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
+import 'package:latlong2/latlong2.dart';
 import 'package:test/test.dart';
-import 'package:latlong2/latlong.dart';
 // import 'package:logging/logging.dart';
 
 // Browser
@@ -92,9 +92,16 @@ void main() {
     });
 
     test('> equal', () {
-      expect(LatLng(-80.0, 0.0), LatLng(-80.0, 0.0));
-      expect(LatLng(-80.0, 0.0), isNot(LatLng(-80.1, 0.0)));
-      expect(LatLng(-80.0, 0.0), isNot(LatLng(0.0, 80.0)));
+      final coords = LatLng(-80.0, 0.0);
+      expect(coords, LatLng(-80.0, 0.0));
+      expect(coords.latitude, -80.0);
+      expect(coords.longitude, 0.0);
+      expect(coords, isNot(LatLng(-80.1, 0.1)));
+      expect(coords.latitude, isNot(-80.1));
+      expect(coords.longitude, isNot(0.1));
+      expect(coords, isNot(LatLng(0.0, 80.0)));
+      expect(coords.latitude, isNot(0.0));
+      expect(coords.longitude, isNot(80.0));
     }); // end of 'equal' test
   });
 }

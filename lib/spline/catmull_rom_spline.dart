@@ -17,8 +17,6 @@
  * limitations under the License.
  */
 
-part of spline;
-
 class Point2D {
   final double x;
   final double y;
@@ -30,15 +28,15 @@ abstract class CatmullRom<R> {
   const CatmullRom();
 
   R position(final double distance);
+
   R percentage(final num percent) => position(percent / 100);
 }
 
 class CatmullRomSpline extends CatmullRom<double> {
-  // final Logger _logger = new Logger('spline.CatmullRomSpline');
-
   final double _p0, _p1, _p2, _p3;
 
   const CatmullRomSpline(this._p0, this._p1, this._p2, this._p3);
+
   const CatmullRomSpline.noEndpoints(final double p1, final double p2)
       : _p0 = p1,
         _p1 = p1,
