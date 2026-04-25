@@ -36,14 +36,24 @@ void main() {
 
     test('> Range', () {
       expect(() => LatLng(-80.0, 0.0), returnsNormally);
-      expect(() => LatLng(-100.0, 0.0), throwsAssertionError);
+      expect(() => LatLng(-100.0, 0.0), returnsNormally);
       expect(() => LatLng(80.0, 0.0), returnsNormally);
-      expect(() => LatLng(100.0, 0.0), throwsAssertionError);
+      expect(() => LatLng(100.0, 0.0), returnsNormally);
       expect(() => LatLng(0.0, -170.0), returnsNormally);
-      expect(() => LatLng(0.0, -190.0), throwsAssertionError);
+      expect(() => LatLng(0.0, -190.0), returnsNormally);
       expect(() => LatLng(0.0, 170.0), returnsNormally);
-      expect(() => LatLng(0.0, 190.0), throwsAssertionError);
+      expect(() => LatLng(0.0, 190.0), returnsNormally);
     }); // end of 'Range' test
+
+    test('> isValid', () {
+      expect(LatLng(0.0, 0.0).isValid, isTrue);
+      expect(LatLng(90.0, 180.0).isValid, isTrue);
+      expect(LatLng(-90.0, -180.0).isValid, isTrue);
+      expect(LatLng(-100.0, 0.0).isValid, isFalse);
+      expect(LatLng(100.0, 0.0).isValid, isFalse);
+      expect(LatLng(0.0, -190.0).isValid, isFalse);
+      expect(LatLng(0.0, 190.0).isValid, isFalse);
+    }); // end of 'isValid' test
 
     test('> Rad', () {
       expect((LatLng(-80.0, 0.0)).latitudeInRad, -1.3962634015954636);

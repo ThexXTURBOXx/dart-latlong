@@ -35,6 +35,9 @@ class LatLng {
 
   double get longitudeInRad => degToRadian(longitude);
 
+  bool get isValid =>
+      latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180;
+
   LatLng.fromJson(Map<String, dynamic> json)
       : latitude = (json['coordinates'][1] as num).toDouble(),
         longitude = (json['coordinates'][0] as num).toDouble();

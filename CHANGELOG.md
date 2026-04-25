@@ -1,3 +1,11 @@
+## [0.10.0]
+
+- Improved `LatLng.hashCode` to use XOR (`^`) instead of addition, reducing collisions.
+- Safer `LatLng.fromJson` parsing: coordinates are now cast via `num` before converting to `double`.
+- Documentation cleanup: removed `new` keyword from all examples, updated return types.
+- Add `LatLng.isValid` getter for explicit bounds checking (latitude ∈ [-90, 90], longitude ∈ [-180, 180]).
+- Fix Range tests to reflect that latitude/longitude boundary assertions were removed in 0.9.1.
+
 ## [0.9.1]
 
 - Remove debug assertions on latitude and longitude boundaries.
