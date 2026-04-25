@@ -52,9 +52,9 @@ class Haversine implements DistanceCalculator {
   ///
   ///     final Haversine distance = const Haversine();
   ///
-  ///     final num distanceInMeter = (earthRadius * math.PI / 4).round();
+  ///     final double distanceInMeter = earthRadius * pi / 4;
   ///
-  ///     final p1 = new LatLng(0.0, 0.0);
+  ///     final p1 = LatLng(0.0, 0.0);
   ///     final p2 = distance.offset(p1, distanceInMeter, 180);
   ///
   @override

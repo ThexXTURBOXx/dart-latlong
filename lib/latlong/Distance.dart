@@ -23,14 +23,14 @@ part of latlong2;
 ///
 /// Default algorithm is [distanceWithVincenty], default radius is [earthRadius]
 ///
-///      final Distance distance = new Distance();
+///      final Distance distance = Distance();
 ///
 ///      // km = 423
-///      final int km = distance.as(LengthUnit.Kilometer,
-///         new LatLng(52.518611,13.408056),new LatLng(51.519475,7.46694444));
+///      final double km = distance.as(LengthUnit.Kilometer,
+///          LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 ///      // meter = 422592
-///      final int meter = distance(new LatLng(52.518611,13.408056),new LatLng(51.519475,7.46694444));
+///      final double meter = distance(LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 class Distance implements DistanceCalculator {
   // final Logger _logger = new Logger('latlong2.Distance');
@@ -64,7 +64,7 @@ class Distance implements DistanceCalculator {
   /// Returns either [Haversine] oder [Vincenty] calculator
   ///
   ///     final Distance distance = const DistanceHaversine();
-  ///     final Circle circle = new Circle(base, 1000.0,calculator: distance.calculator);
+  ///     final Circle circle = Circle(base, 1000.0,calculator: distance.calculator);
   ///
   DistanceCalculator get calculator => _calculator;
 
@@ -75,14 +75,15 @@ class Distance implements DistanceCalculator {
 
   /// Converts the distance to the given [LengthUnit]
   ///
-  ///     final int km = distance.as(LengthUnit.Kilometer,
-  ///         new LatLng(52.518611,13.408056),new LatLng(51.519475,7.46694444));
+  ///     const Distance distance = Distance();
+  ///     final double km = distance.as(LengthUnit.Kilometer,
+  ///          LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
   ///
   double as(final LengthUnit unit, final LatLng p1, final LatLng p2) {
     final dist = _calculator.distance(p1, p2);
 
     // If the distance is NaN or infinite, return 0.0
-    if(dist.isNaN || dist.isInfinite) {
+    if (dist.isNaN || dist.isInfinite) {
       return 0.0;
     }
 
@@ -103,8 +104,8 @@ class Distance implements DistanceCalculator {
   ///
   ///     final Distance distance = const Distance();
   ///
-  ///     final LatLng p1 = new LatLng(0.0, 0.0);
-  ///     final LatLng p2 = new LatLng(-90.0, 0.0);
+  ///     final LatLng p1 = LatLng(0.0, 0.0);
+  ///     final LatLng p2 = LatLng(-90.0, 0.0);
   ///
   ///     expect(distance.direction(p1, p2), equals(180));
   double bearing(final LatLng p1, final LatLng p2) {
@@ -125,9 +126,9 @@ class Distance implements DistanceCalculator {
   ///
   ///     final Distance distance = const Distance();
   ///
-  ///     final num distanceInMeter = (earthRadius * math.PI / 4).round();
+  ///     final num distanceInMeter = (earthRadius * pi / 4).round();
   ///
-  ///     final p1 = new LatLng(0.0, 0.0);
+  ///     final p1 = LatLng(0.0, 0.0);
   ///     final p2 = distance.offset(p1, distanceInMeter, 180);
   ///
   /// Bearing: Left - 270°, right - 90°, up - 0°, down - 180°

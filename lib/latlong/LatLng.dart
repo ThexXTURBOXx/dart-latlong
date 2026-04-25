@@ -21,7 +21,7 @@ part of latlong2;
 
 /// Coordinates in Degrees
 ///
-///     final Location location = new Location(10.000002,12.00001);
+///     final LatLng location = LatLng(10.000002, 12.00001);
 ///
 class LatLng {
   // final Logger _logger = new Logger('latlong2.LatLng');
@@ -50,7 +50,7 @@ class LatLng {
 
   /// Converts sexagesimal string into a lat/long value
   ///
-  ///     final LatLng p1 = new LatLng.fromSexagesimal('''51° 31' 10.11" N, 19° 22' 32.00" W''');
+  ///     final LatLng p1 = LatLng.fromSexagesimal('''51° 31' 10.11" N, 19° 22' 32.00" W''');
   ///     print("${p1.latitude}, ${p1.longitude}");
   ///     // Shows:
   ///     51.519475, -19.37555556
@@ -84,7 +84,7 @@ class LatLng {
 
   /// Converts lat/long values into sexagesimal
   ///
-  ///     final LatLng p1 = new LatLng(51.519475, -19.37555556);
+  ///     final LatLng p1 = LatLng(51.519475, -19.37555556);
   ///
   ///     // Shows: 51° 31' 10.11" N, 19° 22' 32.00" W
   ///     print(p1..toSexagesimal());

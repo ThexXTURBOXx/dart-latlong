@@ -25,7 +25,7 @@ part of latlong2;
 ///         ....
 ///     }
 ///
-///     final Path<Location> path = new Path<Location>(factory: locationFactory);
+///     final Path<Location> path = Path<Location>(factory: locationFactory);
 ///
 typedef LatLngFactory = LatLng Function(double latitude, double longitude);
 
@@ -40,7 +40,7 @@ LatLng _defaultLatLngFactory(final double latitude, final double longitude) =>
 ///         ....
 ///     }
 ///
-///     final Path<Location> path = new Path<Location>(factory: locationFactory);
+///     final Path<Location> path = Path<Location>(factory: locationFactory);
 ///
 class Path<T extends LatLng> {
   /// Coordinates managed by this class
@@ -87,7 +87,7 @@ class Path<T extends LatLng> {
   /// However - if you follow the steps in a given time then the distance from point to point (over time)
   /// is correct. (Almost - because of the curves generate with [CatmullRomSpline2D]
   ///
-  ///     final Path path = new Path.from(zigzag);
+  ///     final Path path = Path.from(zigzag);
   ///
   /// If [smoothPath] is turned on than the minimum of 3 coordinates is required otherwise
   /// we need two
@@ -229,8 +229,8 @@ class Path<T extends LatLng> {
 
   /// Sums up all the distances on the path
   ///
-  ///     final Path path = new Path.from(route);
-  ///     print(path.length);
+  ///     final Path path = Path.from(route);
+  ///     print(path.distance);
   ///
   double get distance {
     final tempCoordinates = List<T>.from(_coordinates);
@@ -279,14 +279,14 @@ class Path<T extends LatLng> {
 
   /// Returns the number of coordinates
   ///
-  ///     final Path path = new Path.from(<LatLng>[ startPos,endPos ]);
+  ///     final Path path = Path.from(<LatLng>[ startPos,endPos ]);
   ///     final int nr = path.nrOfCoordinates; // nr == 2
   ///
   int get nrOfCoordinates => _coordinates.length;
 
   /// Returns the [LatLng] coordinate form [index]
   ///
-  ///     final Path path = new Path.from(<LatLng>[ startPos,endPos ]);
+  ///     final Path path = Path.from(<LatLng>[ startPos,endPos ]);
   ///     final LatLng p1 = path[0]; // p1 == startPos
   ///
   T operator [](final int index) => _coordinates.elementAt(index);

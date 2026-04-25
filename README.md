@@ -19,45 +19,43 @@ is used for smoothing out the path.
 ### Distance
 
 ```dart
-    final Distance distance = new Distance();
+final Distance distance = Distance();
 
-    // km = 423
-    final int km = distance.as(LengthUnit.Kilometer,
-     new LatLng(52.518611,13.408056),new LatLng(51.519475,7.46694444));
+// km = 423
+final double km = distance.as(LengthUnit.Kilometer,
+    LatLng(52.518611, 13.408056), LatLng(51.519475, 7.46694444));
 
-    // meter = 422591.551
-    final int meter = distance(
-        new LatLng(52.518611,13.408056),
-        new LatLng(51.519475,7.46694444)
-        );
-
+// meter = 422591.551
+final double meter = distance(
+  LatLng(52.518611, 13.408056),
+  LatLng(51.519475, 7.46694444),
+);
 ```
 
 ## Offset
 
 ```dart
-    final Distance distance = const Distance();
-    final num distanceInMeter = (earthRadius * math.pi / 4).round();
+final Distance distance = const Distance();
+final num distanceInMeter = (earthRadius * pi / 4).round();
 
-    final p1 = new LatLng(0.0, 0.0);
-    final p2 = distance.offset(p1, distanceInMeter, 180);
+final p1 = LatLng(0.0, 0.0);
+final p2 = distance.offset(p1, distanceInMeter, 180);
 
-    // LatLng(latitude:-45.219848, longitude:0.0)
-    print(p2.round());
+// LatLng(latitude:-45.219848, longitude:0.0)
+print(p2.round());
 
-    // 45° 13' 11.45" S, 0° 0' 0.00" O
-    print(p2.toSexagesimal());
-
+// 45° 13' 11.45" S, 0° 0' 0.00" O
+print(p2.toSexagesimal());
 ```
 
 ## Path smoothing
 
 ```dart
-    // zigzag is a list of coordinates
-    final Path path = new Path.from(zigzag);
+// zigzag is a list of coordinates
+final Path path = Path.from(zigzag);
 
-    // Result is below
-    final Path steps = path.equalize(8,smoothPath: true);
+// Result is below
+final Path steps = path.equalize(8,smoothPath: true);
 ```
 
 <p align="center">

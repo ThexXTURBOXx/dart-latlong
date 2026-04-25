@@ -22,14 +22,14 @@
 /// For distance calculations the default algorithm [Vincenty] is used.
 /// [Vincenty] is a bit slower than [Haversine] but fare more accurate!
 ///
-///      final Distance distance = new Distance();
+///      final Distance distance = Distance();
 ///
 ///      // km = 423
 ///      final int km = distance.as(LengthUnit.Kilometer,
-///         new LatLng(52.518611,13.408056),new LatLng(51.519475,7.46694444));
+///         LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 ///      // meter = 422592
-///      final int meter = distance(new LatLng(52.518611,13.408056),new LatLng(51.519475,7.46694444));
+///      final int meter = distance(LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 /// Find more infos on [Movable Type Scripts](http://www.movable-type.co.uk/scripts/latlong2.html)
 /// and [Movable Type Scripts - Vincenty](http://www.movable-type.co.uk/scripts/latlong2-vincenty.html)
@@ -42,20 +42,17 @@ library latlong2;
 
 import 'dart:math' as math;
 
-import 'package:latlong2/spline.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/spline.dart';
 
-part 'latlong/interfaces.dart';
-
-part 'latlong/calculator/Haversine.dart';
-part 'latlong/calculator/Vincenty.dart';
-
+part 'latlong/Circle.dart';
 part 'latlong/Distance.dart';
 part 'latlong/LatLng.dart';
 part 'latlong/LengthUnit.dart';
-
 part 'latlong/Path.dart';
-part 'latlong/Circle.dart';
+part 'latlong/calculator/Haversine.dart';
+part 'latlong/calculator/Vincenty.dart';
+part 'latlong/interfaces.dart';
 
 /// Equator radius in meter (WGS84 ellipsoid)
 const double equatorRadius = 6378137.0;
