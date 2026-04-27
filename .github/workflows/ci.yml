@@ -30,5 +30,8 @@ jobs:
       - name: Analyze
         run: dart analyze
 
+      - name: Test
+        run: dart test --coverage=.cov
+
       - name: Pana
         run: pana
