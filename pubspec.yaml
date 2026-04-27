@@ -6,6 +6,11 @@ repository: https://github.com/ThexXTURBOXx/dart-latlong
 issue_tracker: https://github.com/ThexXTURBOXx/dart-latlong/issues
 funding:
   - https://github.com/sponsors/ThexXTURBOXx
+screenshots:
+  - description: "Latitude and longitude visualisation"
+    path: doc/images/latlong.jpg
+  - description: "Path smoothing visualisation"
+    path: doc/images/smooth-path.jpg
 topics:
   - coordinates
   - dart
