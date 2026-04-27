@@ -28,7 +28,7 @@ import 'package:latlong2/latlong2.dart';
 ///      final Distance distance = Distance();
 ///
 ///      // km = 423
-///      final double km = distance.as(LengthUnit.Kilometer,
+///      final double km = distance.as(LengthUnit.kilometer,
 ///          LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
 ///
 ///      // meter = 422592
@@ -76,7 +76,7 @@ class Distance implements DistanceCalculator {
   /// Converts the distance to the given [LengthUnit]
   ///
   ///     const Distance distance = Distance();
-  ///     final double km = distance.as(LengthUnit.Kilometer,
+  ///     final double km = distance.as(LengthUnit.kilometer,
   ///          LatLng(52.518611,13.408056), LatLng(51.519475,7.46694444));
   ///
   double as(final LengthUnit unit, final LatLng p1, final LatLng p2) {
@@ -107,7 +107,7 @@ class Distance implements DistanceCalculator {
   ///     final LatLng p1 = LatLng(0.0, 0.0);
   ///     final LatLng p2 = LatLng(-90.0, 0.0);
   ///
-  ///     expect(distance.direction(p1, p2), equals(180));
+  ///     expect(distance.bearing(p1, p2), equals(180));
   double bearing(final LatLng p1, final LatLng p2) {
     final diffLongitude = p2.longitudeInRad - p1.longitudeInRad;
 
@@ -144,7 +144,7 @@ class Distance implements DistanceCalculator {
 }
 
 /// Shortcut for
-///     final Distance distance = const Distance(calculator: const Vincenty());
+///     final Distance distance = const Distance(calculator: Vincenty());
 ///
 class DistanceVincenty extends Distance {
   const DistanceVincenty({super.roundResult})
@@ -163,7 +163,7 @@ class DistanceVincenty extends Distance {
 }
 
 /// Shortcut for
-///     final Distance distance = const Distance(calculator: const Haversine());
+///     final Distance distance = const Distance(calculator: Haversine());
 ///
 class DistanceHaversine extends Distance {
   const DistanceHaversine({super.roundResult})

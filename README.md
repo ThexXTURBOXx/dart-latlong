@@ -22,7 +22,7 @@ is used for smoothing out the path.
 final Distance distance = Distance();
 
 // km = 423
-final double km = distance.as(LengthUnit.Kilometer,
+final double km = distance.as(LengthUnit.kilometer,
     LatLng(52.518611, 13.408056), LatLng(51.519475, 7.46694444));
 
 // meter = 422591.551
@@ -55,7 +55,7 @@ print(p2.toSexagesimal());
 final Path path = Path.from(zigzag);
 
 // Result is below
-final Path steps = path.equalize(8,smoothPath: true);
+final Path steps = path.equalize(8, smoothPath: true);
 ```
 
 <p align="center">
