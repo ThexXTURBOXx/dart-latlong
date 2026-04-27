@@ -1,3 +1,9 @@
+## [1.0.0-dev.0]
+
+- **Breaking change**: Renamed all files to snake_case
+- Apply proper analyzer rules
+- Specify dev_dependencies versions
+
 ## [0.10.1]
 
 - **New maintainer: ThexXTURBOXx (Nico Mexis)**
