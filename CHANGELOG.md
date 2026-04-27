@@ -1,3 +1,9 @@
+## [0.10.1]
+
+- **New maintainer: ThexXTURBOXx (Nico Mexis)**
+- Improved `LatLng.hashCode` properly, reducing collisions (old hash function was worse).
+- Reorganised pubspec and fixed license on pub.dev
+
 ## [0.10.0]
 
 - Improved `LatLng.hashCode` to use XOR (`^`) instead of addition, reducing collisions.
