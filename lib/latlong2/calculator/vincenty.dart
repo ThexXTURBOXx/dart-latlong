@@ -88,7 +88,7 @@ class Vincenty implements DistanceCalculator {
     } while ((lambda - lambdaP).abs() > 1e-12 && --maxIterations > 0);
 
     if (maxIterations == 0) {
-      throw StateError('Distance calculation faild to converge!');
+      throw StateError('Distance calculation failed to converge!');
     }
 
     var uSq = cosSqAlpha * (a * a - b * b) / (b * b);
@@ -169,7 +169,7 @@ class Vincenty implements DistanceCalculator {
     } while ((sigma - sigmaP).abs() > 1e-12 && --maxIterations > 0);
 
     if (maxIterations == 0) {
-      throw StateError('offset calculation faild to converge!');
+      throw StateError('Offset calculation failed to converge!');
     }
 
     final tmp = sinU1 * sinSigma - cosU1 * cosSigma * cosAlpha1;

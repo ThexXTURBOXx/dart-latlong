@@ -8,7 +8,7 @@ This library supports both, the "Haversine" and the "Vincenty" algorithm.
 "Haversine" is a bit faster but "Vincenty" is far more accurate!
 
 <p align="center">
-    <img alt="LatLong" src="https://github.com/MikeMitterer/dart-latlong/raw/master/doc/images/latlong.jpg">
+    <img alt="LatLong" src="https://github.com/ThexXTURBOXx/dart-latlong/raw/master/doc/images/latlong.jpg">
 </p>
 
 [Catmull-Rom algorithm](https://hawkesy.blogspot.co.at/2010/05/catmull-rom-spline-curve-implementation.html)
@@ -59,7 +59,7 @@ final Path steps = path.equalize(8, smoothPath: true);
 ```
 
 <p align="center">
-    <img alt="Smooth path" src="https://github.com/MikeMitterer/dart-latlong/raw/master/doc/images/smooth-path.jpg">
+    <img alt="Smooth path" src="https://github.com/ThexXTURBOXx/dart-latlong/raw/master/doc/images/smooth-path.jpg">
 </p>
 
 ## Features and bugs

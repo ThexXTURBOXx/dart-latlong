@@ -40,10 +40,10 @@ void main() async {
       expect(LengthUnit.kilometer.to(LengthUnit.meter, 1.0), 1000.0);
     }); // end of 'Kilometer' test
 
-    test('> Mike', () {
+    test('> Mile', () {
       expect((LengthUnit.mile.to(LengthUnit.meter, 1.0) * 100).round() / 100,
           1609.34);
-    }); // end of 'Mike' test
+    }); // end of 'Mile' test
   });
   // End of 'LengthUnit' group
 }

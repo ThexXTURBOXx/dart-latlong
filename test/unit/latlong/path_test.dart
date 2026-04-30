@@ -78,7 +78,7 @@ void main() {
 
   group('Equalize path', () {
     test(
-        '> The total size of a path with 1000m lengt devided by 10sections must have the same'
+        '> The total size of a path with 1000m length divided by 10 sections must have the same '
         'length as the base path', () {
       final distance = Distance();
       final startPos = LatLng(0.0, 0.0);
@@ -97,7 +97,7 @@ void main() {
     }); // end of '10 intermediate steps in 1000m should have the same length' test
 
     test(
-        '> 10 smoothd out steps in total have approximatly!!! the same lenght '
+        '> 10 smoothed out steps in total have approximately!!! the same length '
         'as the base path', () {
       final distance = Distance();
       final startPos = LatLng(0.0, 0.0);
@@ -156,7 +156,7 @@ void main() {
     }); // end of 'Reality Test - Westendorf, short' test
 
     test(
-        '> ZigZag, according to Google-Earth - 282m,'
+        '> ZigZag, according to Google-Earth - 282m, '
         'first to last point 190m (acc. movable-type.co.uk (Haversine)', () {
       final path = Path.from(zigzag);
       expect(path.distance, 282);
@@ -195,7 +195,7 @@ void main() {
       expect(path.distance, 3377);
     }); // end of 'Path length should be 3377m' test
 
-    test('> Path lenght should be 3.377km', () {
+    test('> Path length should be 3.377km', () {
       final path = Path.from(route);
 
       expect(

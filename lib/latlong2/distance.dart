@@ -23,7 +23,7 @@ import 'package:latlong2/latlong2.dart';
 
 /// Calculates the distance between points.
 ///
-/// Default algorithm is [distanceWithVincenty], default radius is [earthRadius]
+/// Default algorithm is [Vincenty], default radius is [earthRadius]
 ///
 ///      final Distance distance = Distance();
 ///
@@ -92,7 +92,7 @@ class Distance implements DistanceCalculator {
 
   /// Computes the distance between two points.
   ///
-  /// The function uses the [DistanceAlgorithm] specified in the CTOR
+  /// The function uses the [DistanceCalculator] specified in the CTOR
   @override
   double distance(final LatLng p1, final LatLng p2) =>
       _round(_calculator.distance(p1, p2));

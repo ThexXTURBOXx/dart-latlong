@@ -19,8 +19,8 @@ void main() {
     setUp(() {});
 
     test('> Radius', () {
-      expect((Distance()).radius, earthRadius);
-      expect((Distance.withRadius(100.0)).radius, 100.0);
+      expect(Distance().radius, earthRadius);
+      expect(Distance.withRadius(100.0).radius, 100.0);
     }); // end of 'Radius' test
 
     test('> Distance to the same point is 0', () {
@@ -47,7 +47,7 @@ void main() {
       expect(distance.as(LengthUnit.meter, p1, p2), equals(10001966));
     }); // end of 'Distance between 0 and 90.0' test
 
-    test('> Distance between 0 and 90.0 is 10001.96572931165 km ', () {
+    test('> Distance between 0 and 90.0 is 10001.96572931165 km', () {
       final distance = Distance(roundResult: false);
       final p1 = LatLng(0.0, 0.0);
       final p2 = LatLng(90.0, 0.0);

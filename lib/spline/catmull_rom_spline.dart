@@ -47,7 +47,7 @@ class CatmullRomSpline extends CatmullRom<double> {
   double position(final double distance) {
     if (distance < 0 || distance > 1) {
       throw ArgumentError.value(
-          distance, 'distance', 'Distance must be beteen 0 and 1.');
+          distance, 'distance', 'Distance must be between 0 and 1.');
     }
 
     return 0.5 *
@@ -76,7 +76,7 @@ class CatmullRomSpline2D<T extends num> extends CatmullRom<Point2D> {
   Point2D position(final double distance) {
     if (distance < 0 || distance > 1) {
       throw ArgumentError.value(
-          distance, 'distance', 'Distance must be beteen 0 and 1.');
+          distance, 'distance', 'Distance must be between 0 and 1.');
     }
 
     return Point2D(

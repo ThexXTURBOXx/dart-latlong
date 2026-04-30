@@ -122,7 +122,7 @@ class Path<T extends LatLng> {
     if (stepDistance > baseLength / 2) {
       print(
           'Warning: Equalizing the path (L: $baseLength) with a key-frame distance of $stepDistance leads to'
-          'weired results. Turn of path smooting.');
+          'weired results. Turn of path smoothing.');
     }
 
     // no steps possible - so return an empty path
