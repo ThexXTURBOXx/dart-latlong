@@ -1,3 +1,10 @@
+## [1.0.0-dev.1]
+
+- Added `SegmentDirection` interface for specifying in which direction distances should be calculated
+- Allow more customisation in `Vincenty`
+- Updated and fixed documentation
+- Fixed a few typos here and there
+
 ## [1.0.0-dev.0]
 
 - **Breaking change**: Renamed all files to snake_case
