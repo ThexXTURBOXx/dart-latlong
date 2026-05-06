@@ -23,8 +23,6 @@ import 'package:latlong2/latlong2.dart';
 ///
 /// Circle uses by default the Vincenty-Algorithm for distance computations
 class Circle {
-  // final Logger _logger = new Logger('latlong2.Circle');
-
   final double radius;
   final LatLng center;
   final DistanceCalculator _calculator;

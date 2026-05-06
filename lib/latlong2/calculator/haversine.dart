@@ -22,8 +22,6 @@ import 'dart:math';
 import 'package:latlong2/latlong2.dart';
 
 class Haversine implements DistanceCalculator {
-  // final Logger _logger = new Logger('latlong2.Haversine');
-
   const Haversine();
 
   /// Calculates distance with Haversine algorithm.

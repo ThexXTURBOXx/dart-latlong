@@ -27,8 +27,6 @@ import 'package:latlong2/latlong2.dart';
 ///     final LatLng location = LatLng(10.000002, 12.00001);
 ///
 class LatLng {
-  // final Logger _logger = new Logger('latlong2.LatLng');
-
   final double latitude;
   final double longitude;
 

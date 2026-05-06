@@ -22,8 +22,6 @@ import 'dart:math';
 import 'package:latlong2/latlong2.dart';
 
 class Vincenty implements DistanceCalculator {
-  // final Logger _logger = new Logger('latlong2.Vincenty');
-
   const Vincenty();
 
   /// Calculates distance with Vincenty algorithm.
@@ -191,7 +189,6 @@ class Vincenty implements DistanceCalculator {
                         c * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
 
     var lon2 = longitude + l;
-    // print("LA ${radianToDeg(lat2)}, LO ${radianToDeg(lon2)}");
 
     if (lon2 > pi) {
       lon2 = lon2 - 2 * pi;

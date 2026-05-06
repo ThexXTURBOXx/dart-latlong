@@ -115,12 +115,11 @@ double sexagesimal2decimal(final String str) {
   final pattern = RegExp('''(\\d+)°\\s*(\\d+)'\\s*(\\d+).(\\d+)"''');
   final m = pattern.firstMatch(str);
   if (m != null) {
-    final deg = double.tryParse(m[1]!)!;
-    final min = double.tryParse(m[2]!)!;
-    final sec = double.tryParse(m[3]!)!;
-    final frac = double.tryParse(m[4]!)!;
-    final d = deg + min / 60 + sec / (60 * 60) + frac / (60 * 60 * 100);
-    return d;
+    final deg = double.parse(m[1]!);
+    final min = double.parse(m[2]!);
+    final sec = double.parse(m[3]!);
+    final frac = double.parse(m[4]!);
+    return deg + min / 60 + sec / (60 * 60) + frac / (60 * 60 * 100);
   } else {
     throw 'Invalid sexagesimal: $str';
   }
