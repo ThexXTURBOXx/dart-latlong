@@ -1,5 +1,5 @@
 # Files and directories created by pub
-.cov/
+coverage/
 .dart_tool/
 .packages
 pubspec.lock

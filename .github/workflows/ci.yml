@@ -31,7 +31,7 @@ jobs:
         run: dart analyze
 
       - name: Test
-        run: dart test --coverage=.cov
+        run: flutter test --coverage
 
       - name: Pana
         run: pana
