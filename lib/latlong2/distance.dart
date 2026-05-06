@@ -69,8 +69,9 @@ class Distance implements DistanceCalculator {
   DistanceCalculator get calculator => _calculator;
 
   /// Shortcut for [distance]
-  double call(final LatLng p1, final LatLng p2) {
-    return distance(p1, p2);
+  double call(final LatLng p1, final LatLng p2,
+      {final SegmentDirection lngDir = SegmentDirection.lazy}) {
+    return distance(p1, p2, lngDir: lngDir);
   }
 
   /// Converts the distance to the given [LengthUnit]
@@ -94,8 +95,9 @@ class Distance implements DistanceCalculator {
   ///
   /// The function uses the [DistanceCalculator] specified in the CTOR
   @override
-  double distance(final LatLng p1, final LatLng p2) =>
-      _round(_calculator.distance(p1, p2));
+  double distance(final LatLng p1, final LatLng p2,
+          {final SegmentDirection lngDir = SegmentDirection.lazy}) =>
+      _round(_calculator.distance(p1, p2, lngDir: lngDir));
 
   /// Returns the great circle bearing (direction) in degrees to the next point ([p2])
   ///

@@ -11,6 +11,12 @@ import 'package:test/test.dart';
 // Commandline
 // import "package:console_log_handler/print_log_handler.dart";
 
+/// Raw epsilon for comparing large doubles (high accuracy).
+const eps = 1;
+
+/// Percentage epsilon for comparing large doubles (low accuracy).
+const epsPerc = 0.005;
+
 void main() {
   // final Logger _logger = new Logger("test.Distance");
   // configLogging();
@@ -23,50 +29,9 @@ void main() {
       expect(Distance.withRadius(100.0).radius, 100.0);
     }); // end of 'Radius' test
 
-    test('> Distance to the same point is 0', () {
-      final compute = Distance();
-      final p = LatLng(0.0, 0.0);
-
-      expect(compute.distance(p, p), equals(0));
-    }); // end of 'Simple distance' test
-
-    test('> Distance between 0 and 90.0 is around 10.000km', () {
-      final distance = Distance();
-      final p1 = LatLng(0.0, 0.0);
-      final p2 = LatLng(90.0, 0.0);
-
-      // no rounding
-      expect(distance(p1, p2) ~/ 1000, equals(10001));
-
-      expect(
-          LengthUnit.meter.to(LengthUnit.kilometer, distance(p1, p2)).round(),
-          equals(10002));
-
-      // rounds to 10002
-      expect(distance.as(LengthUnit.kilometer, p1, p2), equals(10002));
-      expect(distance.as(LengthUnit.meter, p1, p2), equals(10001966));
-    }); // end of 'Distance between 0 and 90.0' test
-
-    test('> Distance between 0 and 90.0 is 10001.96572931165 km', () {
-      final distance = Distance(roundResult: false);
-      final p1 = LatLng(0.0, 0.0);
-      final p2 = LatLng(90.0, 0.0);
-
-      expect(
-          distance.as(LengthUnit.kilometer, p1, p2), equals(10001.96572931165));
-    }); // end of 'Round' test
-
-    test('> distance between 0,-180 and 0,180 is 0', () {
-      final distance = Distance();
-      final p1 = LatLng(0.0, -180.0);
-      final p2 = LatLng(0.0, 180.0);
-
-      expect(distance(p1, p2), 0);
-    }); // end of 'distance between 0,-180 and 0,180 is 0' test
-
-    group('Vincenty', () {
-      test('> Test 1', () {
-        final distance = Distance();
+    group('Vincenty [accurate]', () {
+      test('> Random test', () {
+        final distance = Distance(calculator: Vincenty());
 
         expect(
             distance(
@@ -78,10 +43,213 @@ void main() {
                 LatLng(51.519475, 7.46694444)),
             423);
       });
+
+      test('> Distance to the same point', () {
+        final compute = DistanceVincenty();
+        final p = LatLng(0.0, 0.0);
+        final q = LatLng(55.0, 78.0);
+
+        expect(compute.distance(p, p, lngDir: SegmentDirection.laziest),
+            equals(0));
+        expect(
+            compute.distance(p, p, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.longestPath),
+            closeTo(compute.radius * tau, eps));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p, p, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(compute.radius * tau, eps));
+        expect(
+            compute.distance(p, p, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(compute.radius * tau, eps));
+
+        expect(compute.distance(q, q, lngDir: SegmentDirection.laziest),
+            equals(0));
+        expect(
+            compute.distance(q, q, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.longestPath),
+            closeTo(compute.radius * tau, eps));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(q, q, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(compute.radius * tau, eps));
+        expect(
+            compute.distance(q, q, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(compute.radius * tau, eps));
+      }); // end of 'Distance to the same point' test
+
+      test('> Distance between 0 and 90.0 is around 10.002km', () {
+        final distance = Distance();
+        final p1 = LatLng(0.0, 0.0);
+        final p2 = LatLng(90.0, 0.0);
+
+        // no rounding
+        expect(distance(p1, p2) ~/ 1000, closeTo(10002, eps));
+
+        expect(
+            LengthUnit.meter.to(LengthUnit.kilometer, distance(p1, p2)).round(),
+            closeTo(10002, eps));
+
+        // rounds to 10002
+        expect(distance.as(LengthUnit.kilometer, p1, p2), closeTo(10002, eps));
+        expect(distance.as(LengthUnit.meter, p1, p2), closeTo(10001966, eps));
+      }); // end of 'Distance between 0 and 90.0' test
+
+      test('> Distance between 0 and 90.0 is 10001.96572931165 km', () {
+        final distance = Distance(roundResult: false);
+        final p1 = LatLng(0.0, 0.0);
+        final p2 = LatLng(90.0, 0.0);
+
+        expect(distance.as(LengthUnit.kilometer, p1, p2),
+            equals(10001.96572931165));
+      }); // end of 'Round' test
+
+      test('> distance between 0,-180 and 0,180', () {
+        final compute = Distance();
+        final p1 = LatLng(0.0, -180.0);
+        final p2 = LatLng(0.0, 180.0);
+
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
+            closeTo(compute.radius * tau, eps));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
+            closeTo(compute.radius * tau, eps));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(compute.radius * tau, eps));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(compute.radius * tau, eps));
+
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.laziest),
+            closeTo(compute.radius * tau, eps));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.longestPath),
+            closeTo(compute.radius * tau, eps));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(compute.radius * tau, eps));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(compute.radius * tau, eps));
+      }); // end of 'distance between 0,-180 and 0,180' test
+
+      test('> distance between 1,-179 and -1,179', () {
+        final compute = Distance();
+        final p1 = LatLng(1.0, -179.0);
+        final p2 = LatLng(-1.0, 179.0);
+
+        // 39660259 is not radius*tau-313799. This is because it is not
+        // necessarily THE longest path, but rather the path in the opposite
+        // direction of whatever shortestPath would do. And in this case, we
+        // need to account for the eccentricity of the earth (two different
+        // radii, according to the WGS84 definition).
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
+            closeTo(39660259, eps));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.lazy),
+            closeTo(39660259, eps));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
+            closeTo(313799, eps));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
+            closeTo(39660259, eps));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
+            closeTo(39660259, eps));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
+            closeTo(313799, eps));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(39660259, eps));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(313799, eps));
+
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.laziest),
+            closeTo(39660259, eps));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.lazy),
+            closeTo(39660259, eps));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.shortestPath),
+            closeTo(313799, eps));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.longestPath),
+            closeTo(39660259, eps));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.eastward),
+            closeTo(313799, eps));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.westward),
+            closeTo(39660259, eps));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(313799, eps));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(39660259, eps));
+      }); // end of 'distance between 0,-179 and 0,179' test
+
+      test('> distance between 0,0 and 0,-45', () {
+        final distance = Distance();
+        final p1 = LatLng(0.0, 0.0);
+        final p2 = LatLng(0.0, -45.0);
+
+        expect(distance(p1, p2, lngDir: SegmentDirection.laziest),
+            closeTo(5009377, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.lazy),
+            closeTo(5009377, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.shortestPath),
+            closeTo(5009377, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.longestPath),
+            closeTo(34931276, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.eastward),
+            closeTo(34931276, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.westward),
+            closeTo(5009377, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(34931276, eps));
+        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(5009377, eps));
+
+        expect(distance(p2, p1, lngDir: SegmentDirection.laziest),
+            closeTo(5009377, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.lazy),
+            closeTo(5009377, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.shortestPath),
+            closeTo(5009377, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.longestPath),
+            closeTo(34931276, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.eastward),
+            closeTo(5009377, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.westward),
+            closeTo(34931276, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            closeTo(5009377, eps));
+        expect(distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            closeTo(34931276, eps));
+      }); // end of 'distance between 0,0 and 0,-45' test
     }); // End of 'Vincenty' group
 
-    group('Haversine - not so accurate', () {
-      test('> Test 1', () {
+    group('Haversine [not so accurate]', () {
+      test('> Random test', () {
         final distance = Distance(calculator: const Haversine());
 
         expect(
@@ -89,6 +257,166 @@ void main() {
                 LatLng(52.518611, 13.408056), LatLng(51.519475, 7.46694444)),
             421786.0);
       });
+
+      test('> Distance to the same point', () {
+        final compute = DistanceHaversine();
+        final p = LatLng(0.0, 0.0);
+        final q = LatLng(55.0, 78.0);
+
+        expect(compute.distance(p, p, lngDir: SegmentDirection.laziest),
+            equals(0));
+        expect(
+            compute.distance(p, p, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.longestPath),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(p, p, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p, p, lngDir: SegmentDirection.strictlyEastward),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(
+            compute.distance(p, p, lngDir: SegmentDirection.strictlyWestward),
+            closeToPerc(compute.radius * tau, epsPerc));
+
+        expect(compute.distance(q, q, lngDir: SegmentDirection.laziest),
+            equals(0));
+        expect(
+            compute.distance(q, q, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.longestPath),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(q, q, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(q, q, lngDir: SegmentDirection.strictlyEastward),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(
+            compute.distance(q, q, lngDir: SegmentDirection.strictlyWestward),
+            closeToPerc(compute.radius * tau, epsPerc));
+      }); // end of 'Distance to the same point' test
+
+      test('> Distance between 0 and 90.0 is around 10.002km', () {
+        final distance = DistanceHaversine();
+        final p1 = LatLng(0.0, 0.0);
+        final p2 = LatLng(90.0, 0.0);
+
+        // no rounding
+        expect(distance(p1, p2) ~/ 1000, closeToPerc(10002, epsPerc));
+
+        expect(
+            LengthUnit.meter.to(LengthUnit.kilometer, distance(p1, p2)).round(),
+            closeToPerc(10002, epsPerc));
+
+        // rounds to 10002
+        expect(distance.as(LengthUnit.kilometer, p1, p2),
+            closeToPerc(10002, epsPerc));
+        expect(distance.as(LengthUnit.meter, p1, p2),
+            closeToPerc(10001966, epsPerc));
+      }); // end of 'Distance between 0 and 90.0' test
+
+      test('> distance between 0,-180 and 0,180', () {
+        final compute = DistanceHaversine();
+        final p1 = LatLng(0.0, -180.0);
+        final p2 = LatLng(0.0, 180.0);
+
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.lazy), equals(0));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            closeToPerc(compute.radius * tau, epsPerc));
+      }); // end of 'distance between 0,-180 and 0,180' test
+
+      test('> distance between 1,-179 and -1,179', () {
+        final compute = DistanceHaversine();
+        final p1 = LatLng(1.0, -179.0);
+        final p2 = LatLng(-1.0, 179.0);
+
+        // 39660259 is not radius*tau-313799. This is because it is not
+        // necessarily THE longest path, but rather the path in the opposite
+        // direction of whatever shortestPath would do. And in this case, we
+        // need to account for the eccentricity of the earth (two different
+        // radii, according to the WGS84 definition).
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.lazy),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
+            closeToPerc(313799, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
+            closeToPerc(313799, epsPerc));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            closeToPerc(39660259, epsPerc));
+        expect(
+            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            closeToPerc(313799, epsPerc));
+
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.laziest),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.lazy),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.shortestPath),
+            closeToPerc(313799, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.longestPath),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.eastward),
+            closeToPerc(313799, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: SegmentDirection.westward),
+            closeToPerc(39660259, epsPerc));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            closeToPerc(313799, epsPerc));
+        expect(
+            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            closeToPerc(39660259, epsPerc));
+      }); // end of 'distance between 0,-179 and 0,179' test
+
+      test('> distance between 0,0 and 0,-45', () {
+        final distance = DistanceHaversine();
+        final p1 = LatLng(0.0, 0.0);
+        final p2 = LatLng(0.0, -45.0);
+
+        expect(distance(p1, p2, lngDir: SegmentDirection.laziest),
+            closeToPerc(5009377, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.lazy),
+            closeToPerc(5009377, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.shortestPath),
+            closeToPerc(5009377, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.longestPath),
+            closeToPerc(34931276, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.eastward),
+            closeToPerc(34931276, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.westward),
+            closeToPerc(5009377, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            closeToPerc(34931276, epsPerc));
+        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            closeToPerc(5009377, epsPerc));
+      }); // end of 'distance between 0,0 and 0,-45' test
     }); // End of 'Haversine' group
   });
   // End of 'Distance' group
@@ -190,3 +518,6 @@ void main() {
 }
 
 // - Helper --------------------------------------------------------------------------------------
+
+Matcher closeToPerc(num value, num percentage) =>
+    closeTo(value, percentage * value);

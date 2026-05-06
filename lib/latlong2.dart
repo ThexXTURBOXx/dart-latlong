@@ -51,6 +51,12 @@ export 'latlong2/lat_lng.dart';
 export 'latlong2/length_unit.dart';
 export 'latlong2/path.dart';
 
+/// 2*[pi] as a standalone constant since we are using it rather often
+const double twoPi = 2 * pi;
+
+/// The same as [twoPi] (i.e., 2*[pi])
+const double tau = twoPi;
+
 /// Equator radius in meter (WGS84 ellipsoid)
 const double equatorRadius = 6378137.0;
 
@@ -73,8 +79,8 @@ double radianToDeg(final double rad) => rad * (180.0 / pi);
 double round(final double value, {final int decimals = 6}) =>
     (value * pow(10, decimals)).round() / pow(10, decimals);
 
-/// Convert a bearing to be within the 0 to +360 degrees range.
-/// Compass bearing is in the rangen 0° ... 360°
+/// Convert a bearing to be within the [0, +360) degrees range.
+/// Compass bearing is in the range 0° ... 360°
 double normalizeBearing(final double bearing) => (bearing + 360) % 360;
 
 /// Converts a decimal coordinate value to sexagesimal format

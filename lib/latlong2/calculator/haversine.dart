@@ -29,16 +29,25 @@ class Haversine implements DistanceCalculator {
   /// Accuracy can be out by 0.3%
   /// More on [Wikipedia](https://en.wikipedia.org/wiki/Haversine_formula)
   @override
-  double distance(final LatLng p1, final LatLng p2) {
-    final sinDLat = sin((p2.latitudeInRad - p1.latitudeInRad) / 2);
-    final sinDLng = sin((p2.longitudeInRad - p1.longitudeInRad) / 2);
+  double distance(final LatLng p1, final LatLng p2,
+      {final SegmentDirection lngDir = SegmentDirection.lazy}) {
+    final dLat = p2.latitudeInRad - p1.latitudeInRad;
+    final rawDLng = lngDir.effectiveDLng(p1, p2);
+
+    // If |dLng| > pi we are on the long arc. Haversine only works with the
+    // short-arc dLng, so we reduce it and then subtract from 2*pi at the end.
+    final isLongArc = rawDLng.abs() > pi;
+    final dLng = isLongArc ? rawDLng - (rawDLng > 0 ? tau : -tau) : rawDLng;
+
+    final sinDLat = sin(dLat / 2);
+    final sinDLng = sin(dLng / 2);
 
     // Sides
     final a = sinDLat * sinDLat +
         sinDLng * sinDLng * cos(p1.latitudeInRad) * cos(p2.latitudeInRad);
     final c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
-    return equatorRadius * c;
+    return equatorRadius * (isLongArc ? tau - c : c);
   }
 
   /// Returns a destination point based on the given [distance] and [bearing]
