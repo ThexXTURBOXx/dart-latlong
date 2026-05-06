@@ -22,11 +22,14 @@ import 'dart:math';
 import 'package:latlong2/latlong2.dart';
 
 class Vincenty implements DistanceCalculator {
-  const Vincenty();
+  final int maxIterations;
+  final double accuracy;
+
+  /// Default accuracy is about 0.5mm
+  const Vincenty({this.maxIterations = 200, this.accuracy = 1e-12});
 
   /// Calculates distance with Vincenty algorithm.
   ///
-  /// Accuracy is about 0.5mm
   /// More on [Wikipedia](https://en.wikipedia.org/wiki/Vincenty%27s_formulae)
   @override
   double distance(
@@ -61,7 +64,7 @@ class Vincenty implements DistanceCalculator {
         cosSqAlpha,
         cos2SigmaM;
     double lambda = l, lambdaP;
-    var maxIterations = 200;
+    var maxIterations = this.maxIterations;
 
     do {
       sinLambda = sin(lambda);
@@ -98,7 +101,7 @@ class Vincenty implements DistanceCalculator {
                       sinSigma *
                       (cos2SigmaM +
                           C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
-    } while ((lambda - lambdaP).abs() > 1e-12 && --maxIterations > 0);
+    } while ((lambda - lambdaP).abs() > accuracy && --maxIterations > 0);
 
     if (maxIterations == 0) {
       throw StateError('Distance calculation failed to converge!');
