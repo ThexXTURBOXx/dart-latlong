@@ -20,7 +20,7 @@
 class LengthUnit {
   static const LengthUnit millimeter = LengthUnit(1000.0);
   static const LengthUnit centimeter = LengthUnit(100.0);
-  static const LengthUnit meter = LengthUnit(1.0);
+  static const LengthUnit meter = LengthUnit(1.0); // primary unit
   static const LengthUnit kilometer = LengthUnit(0.001);
   static const LengthUnit mile = LengthUnit(0.0006213712);
 
