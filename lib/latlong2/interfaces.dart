@@ -23,7 +23,7 @@ import 'package:latlong2/latlong2.dart';
 
 abstract class DistanceCalculator {
   double distance(final LatLng p1, final LatLng p2,
-      {final SegmentDirection lngDir = SegmentDirection.lazy});
+      {final LongitudeDirection lngDir = LongitudeDirection.lazy});
 
   LatLng offset(
       final LatLng from, final double distanceInMeter, final double bearing);
@@ -32,24 +32,20 @@ abstract class DistanceCalculator {
 /// Determines how the longitudinal delta is interpreted when computing
 /// the distance between two points on a geodesic.
 ///
-/// Built-in instances are available as static constants. Custom directions
-/// can be created by extending this class and overriding [effectiveDLng].
+/// Built-in instances are available as static constants. Custom directions can
+/// be created by extending this class and overriding [effectiveLongitudinalDelta].
 ///
 /// Resulted as part of a discussion in
 /// [flutter_map](https://github.com/fleaflet/flutter_map/issues/2206).
-abstract class SegmentDirection {
-  const SegmentDirection();
+abstract class LongitudeDirection {
+  const LongitudeDirection();
 
   // ---------------------------------------------------------------------------
   // Built-in instances
   // ---------------------------------------------------------------------------
 
-  /// Raw `p2 − p1` longitude difference. May accidentally take the long arc
-  /// if the points straddle the antimeridian.
-  static const laziest = _LaziestDirection();
-
-  /// `(p2 − p1) mod (2*pi)` longitude difference. May accidentally take the
-  /// long arc if the points straddle the antimeridian.
+  /// Raw `(p2 − p1) mod (2*pi)` longitude difference. May accidentally take
+  /// the long arc if the points straddle the antimeridian.
   /// May also be called "Greenwich" or similar.
   /// This is the same as the 0.x default behaviour.
   static const lazy = _LazyDirection();
@@ -86,7 +82,7 @@ abstract class SegmentDirection {
   /// Values in `(−pi, pi]` are treated as the short arc.
   /// Values outside that range (absolute value > pi) are treated as the long
   /// arc by both [Haversine] and [Vincenty].
-  double effectiveDLng(LatLng p1, LatLng p2);
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2);
 
   // ---------------------------------------------------------------------------
   // Shared helpers
@@ -109,37 +105,30 @@ abstract class SegmentDirection {
 // Private implementations of the built-in directions
 // =============================================================================
 
-class _LaziestDirection extends SegmentDirection {
-  const _LaziestDirection();
-
-  @override
-  double effectiveDLng(LatLng p1, LatLng p2) =>
-      p2.longitudeInRad - p1.longitudeInRad;
-}
-
-class _LazyDirection extends SegmentDirection {
+class _LazyDirection extends LongitudeDirection {
   const _LazyDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) =>
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) =>
       (p2.longitudeInRad - p1.longitudeInRad).remainder(tau);
 }
 
-class _ShortestPathDirection extends SegmentDirection {
+class _ShortestPathDirection extends LongitudeDirection {
   const _ShortestPathDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) => SegmentDirection.normaliseShort(
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) =>
+      LongitudeDirection.normaliseShort(
         p2.longitudeInRad - p1.longitudeInRad,
       );
 }
 
-class _LongestPathDirection extends SegmentDirection {
+class _LongestPathDirection extends LongitudeDirection {
   const _LongestPathDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) {
-    final shortest = SegmentDirection.normaliseShort(
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) {
+    final shortest = LongitudeDirection.normaliseShort(
       p2.longitudeInRad - p1.longitudeInRad,
     );
     if (shortest == 0.0) return tau; // co-incident -> full eastward loop
@@ -147,42 +136,44 @@ class _LongestPathDirection extends SegmentDirection {
   }
 }
 
-class _EastwardDirection extends SegmentDirection {
+class _EastwardDirection extends LongitudeDirection {
   const _EastwardDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) => SegmentDirection.normaliseEast(
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) =>
+      LongitudeDirection.normaliseEast(
         p2.longitudeInRad - p1.longitudeInRad,
       );
 }
 
-class _WestwardDirection extends SegmentDirection {
+class _WestwardDirection extends LongitudeDirection {
   const _WestwardDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) => SegmentDirection.normaliseWest(
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) =>
+      LongitudeDirection.normaliseWest(
         p2.longitudeInRad - p1.longitudeInRad,
       );
 }
 
-class _StrictlyEastwardDirection extends SegmentDirection {
+class _StrictlyEastwardDirection extends LongitudeDirection {
   const _StrictlyEastwardDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) {
-    final e = SegmentDirection.normaliseEast(
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) {
+    final e = LongitudeDirection.normaliseEast(
       p2.longitudeInRad - p1.longitudeInRad,
     );
     return e == 0.0 ? tau : e;
   }
 }
 
-class _StrictlyWestwardDirection extends SegmentDirection {
+class _StrictlyWestwardDirection extends LongitudeDirection {
   const _StrictlyWestwardDirection();
 
   @override
-  double effectiveDLng(LatLng p1, LatLng p2) {
-    final w = SegmentDirection.normaliseWest(
+  double effectiveLongitudinalDelta(LatLng p1, LatLng p2) {
+    final w = LongitudeDirection.normaliseWest(
       p2.longitudeInRad - p1.longitudeInRad,
     );
     return w == 0.0 ? -tau : w;

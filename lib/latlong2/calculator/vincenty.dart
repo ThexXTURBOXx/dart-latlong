@@ -35,13 +35,13 @@ class Vincenty implements DistanceCalculator {
   double distance(
     final LatLng p1,
     final LatLng p2, {
-    final SegmentDirection lngDir = SegmentDirection.lazy,
+    final LongitudeDirection lngDir = LongitudeDirection.lazy,
   }) {
     const a = equatorRadius,
         b = polarRadius,
         f = flattening; // WGS-84 ellipsoid params
 
-    final effectiveDLng = lngDir.effectiveDLng(p1, p2);
+    final effectiveDLng = lngDir.effectiveLongitudinalDelta(p1, p2);
 
     // Vincenty's solver only converges for |l| <= pi (short arc).
     // Long-arc cases fold l back into (−pi, pi] here and compensate at the end.

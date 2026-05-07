@@ -30,9 +30,9 @@ class Haversine implements DistanceCalculator {
   /// More on [Wikipedia](https://en.wikipedia.org/wiki/Haversine_formula)
   @override
   double distance(final LatLng p1, final LatLng p2,
-      {final SegmentDirection lngDir = SegmentDirection.lazy}) {
+      {final LongitudeDirection lngDir = LongitudeDirection.lazy}) {
     final dLat = p2.latitudeInRad - p1.latitudeInRad;
-    final rawDLng = lngDir.effectiveDLng(p1, p2);
+    final rawDLng = lngDir.effectiveLongitudinalDelta(p1, p2);
 
     // If |dLng| > pi we are on the long arc. Haversine only works with the
     // short-arc dLng, so we reduce it and then subtract from 2*pi at the end.

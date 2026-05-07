@@ -49,42 +49,38 @@ void main() {
         final p = LatLng(0.0, 0.0);
         final q = LatLng(55.0, 78.0);
 
-        expect(compute.distance(p, p, lngDir: SegmentDirection.laziest),
-            equals(0));
         expect(
-            compute.distance(p, p, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.shortestPath),
+            compute.distance(p, p, lngDir: LongitudeDirection.lazy), equals(0));
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.shortestPath),
             equals(0));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.longestPath),
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.longestPath),
             closeTo(compute.radius * tau, eps));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.eastward),
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.eastward),
             equals(0));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.westward),
             equals(0));
         expect(
-            compute.distance(p, p, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p, p, lngDir: LongitudeDirection.strictlyEastward),
             closeTo(compute.radius * tau, eps));
         expect(
-            compute.distance(p, p, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p, p, lngDir: LongitudeDirection.strictlyWestward),
             closeTo(compute.radius * tau, eps));
 
-        expect(compute.distance(q, q, lngDir: SegmentDirection.laziest),
-            equals(0));
         expect(
-            compute.distance(q, q, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.shortestPath),
+            compute.distance(q, q, lngDir: LongitudeDirection.lazy), equals(0));
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.shortestPath),
             equals(0));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.longestPath),
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.longestPath),
             closeTo(compute.radius * tau, eps));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.eastward),
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.eastward),
             equals(0));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.westward),
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.westward),
             equals(0));
         expect(
-            compute.distance(q, q, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(q, q, lngDir: LongitudeDirection.strictlyEastward),
             closeTo(compute.radius * tau, eps));
         expect(
-            compute.distance(q, q, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(q, q, lngDir: LongitudeDirection.strictlyWestward),
             closeTo(compute.radius * tau, eps));
       }); // end of 'Distance to the same point' test
 
@@ -119,42 +115,44 @@ void main() {
         final p1 = LatLng(0.0, -180.0);
         final p2 = LatLng(0.0, 180.0);
 
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
-            closeTo(compute.radius * tau, eps));
-        expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
-            equals(0));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
-            closeTo(compute.radius * tau, eps));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
-            equals(0));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.lazy),
             equals(0));
         expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p1, p2, lngDir: LongitudeDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.longestPath),
+            closeTo(compute.radius * tau, eps));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.eastward),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyEastward),
             closeTo(compute.radius * tau, eps));
         expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeTo(compute.radius * tau, eps));
 
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.laziest),
-            closeTo(compute.radius * tau, eps));
-        expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.shortestPath),
-            equals(0));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.longestPath),
-            closeTo(compute.radius * tau, eps));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.eastward),
-            equals(0));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.lazy),
             equals(0));
         expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p2, p1, lngDir: LongitudeDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.longestPath),
+            closeTo(compute.radius * tau, eps));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.eastward),
+            equals(0));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p2, p1,
+                lngDir: LongitudeDirection.strictlyEastward),
             closeTo(compute.radius * tau, eps));
         expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p2, p1,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeTo(compute.radius * tau, eps));
       }); // end of 'distance between 0,-180 and 0,180' test
 
@@ -168,42 +166,44 @@ void main() {
         // direction of whatever shortestPath would do. And in this case, we
         // need to account for the eccentricity of the earth (two different
         // radii, according to the WGS84 definition).
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
-            closeTo(39660259, eps));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.lazy),
-            closeTo(39660259, eps));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
-            closeTo(313799, eps));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
-            closeTo(39660259, eps));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
-            closeTo(39660259, eps));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
-            closeTo(313799, eps));
-        expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.lazy),
             closeTo(39660259, eps));
         expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p1, p2, lngDir: LongitudeDirection.shortestPath),
+            closeTo(313799, eps));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.longestPath),
+            closeTo(39660259, eps));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.eastward),
+            closeTo(39660259, eps));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.westward),
+            closeTo(313799, eps));
+        expect(
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyEastward),
+            closeTo(39660259, eps));
+        expect(
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeTo(313799, eps));
 
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.laziest),
-            closeTo(39660259, eps));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.lazy),
-            closeTo(39660259, eps));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.shortestPath),
-            closeTo(313799, eps));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.longestPath),
-            closeTo(39660259, eps));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.eastward),
-            closeTo(313799, eps));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.lazy),
             closeTo(39660259, eps));
         expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p2, p1, lngDir: LongitudeDirection.shortestPath),
+            closeTo(313799, eps));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.longestPath),
+            closeTo(39660259, eps));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.eastward),
+            closeTo(313799, eps));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.westward),
+            closeTo(39660259, eps));
+        expect(
+            compute.distance(p2, p1,
+                lngDir: LongitudeDirection.strictlyEastward),
             closeTo(313799, eps));
         expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p2, p1,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeTo(39660259, eps));
       }); // end of 'distance between 0,-179 and 0,179' test
 
@@ -212,38 +212,34 @@ void main() {
         final p1 = LatLng(0.0, 0.0);
         final p2 = LatLng(0.0, -45.0);
 
-        expect(distance(p1, p2, lngDir: SegmentDirection.laziest),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.lazy),
             closeTo(5009377, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.lazy),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.shortestPath),
             closeTo(5009377, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.shortestPath),
-            closeTo(5009377, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.longestPath),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.longestPath),
             closeTo(34931276, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.eastward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.eastward),
             closeTo(34931276, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.westward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.westward),
             closeTo(5009377, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.strictlyEastward),
             closeTo(34931276, eps));
-        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.strictlyWestward),
             closeTo(5009377, eps));
 
-        expect(distance(p2, p1, lngDir: SegmentDirection.laziest),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.lazy),
             closeTo(5009377, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.lazy),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.shortestPath),
             closeTo(5009377, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.shortestPath),
-            closeTo(5009377, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.longestPath),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.longestPath),
             closeTo(34931276, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.eastward),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.eastward),
             closeTo(5009377, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.westward),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.westward),
             closeTo(34931276, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.strictlyEastward),
             closeTo(5009377, eps));
-        expect(distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+        expect(distance(p2, p1, lngDir: LongitudeDirection.strictlyWestward),
             closeTo(34931276, eps));
       }); // end of 'distance between 0,0 and 0,-45' test
     }); // End of 'Vincenty' group
@@ -263,42 +259,38 @@ void main() {
         final p = LatLng(0.0, 0.0);
         final q = LatLng(55.0, 78.0);
 
-        expect(compute.distance(p, p, lngDir: SegmentDirection.laziest),
-            equals(0));
         expect(
-            compute.distance(p, p, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.shortestPath),
+            compute.distance(p, p, lngDir: LongitudeDirection.lazy), equals(0));
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.shortestPath),
             equals(0));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.longestPath),
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.longestPath),
             closeToPerc(compute.radius * tau, epsPerc));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.eastward),
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.eastward),
             equals(0));
-        expect(compute.distance(p, p, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p, p, lngDir: LongitudeDirection.westward),
             equals(0));
         expect(
-            compute.distance(p, p, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p, p, lngDir: LongitudeDirection.strictlyEastward),
             closeToPerc(compute.radius * tau, epsPerc));
         expect(
-            compute.distance(p, p, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p, p, lngDir: LongitudeDirection.strictlyWestward),
             closeToPerc(compute.radius * tau, epsPerc));
 
-        expect(compute.distance(q, q, lngDir: SegmentDirection.laziest),
-            equals(0));
         expect(
-            compute.distance(q, q, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.shortestPath),
+            compute.distance(q, q, lngDir: LongitudeDirection.lazy), equals(0));
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.shortestPath),
             equals(0));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.longestPath),
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.longestPath),
             closeToPerc(compute.radius * tau, epsPerc));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.eastward),
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.eastward),
             equals(0));
-        expect(compute.distance(q, q, lngDir: SegmentDirection.westward),
+        expect(compute.distance(q, q, lngDir: LongitudeDirection.westward),
             equals(0));
         expect(
-            compute.distance(q, q, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(q, q, lngDir: LongitudeDirection.strictlyEastward),
             closeToPerc(compute.radius * tau, epsPerc));
         expect(
-            compute.distance(q, q, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(q, q, lngDir: LongitudeDirection.strictlyWestward),
             closeToPerc(compute.radius * tau, epsPerc));
       }); // end of 'Distance to the same point' test
 
@@ -326,23 +318,24 @@ void main() {
         final p1 = LatLng(0.0, -180.0);
         final p2 = LatLng(0.0, 180.0);
 
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
-            closeToPerc(compute.radius * tau, epsPerc));
-        expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.lazy), equals(0));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
-            equals(0));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
-            closeToPerc(compute.radius * tau, epsPerc));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
-            equals(0));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.lazy),
             equals(0));
         expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p1, p2, lngDir: LongitudeDirection.shortestPath),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.longestPath),
+            closeToPerc(compute.radius * tau, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.eastward),
+            equals(0));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.westward),
+            equals(0));
+        expect(
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyEastward),
             closeToPerc(compute.radius * tau, epsPerc));
         expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeToPerc(compute.radius * tau, epsPerc));
       }); // end of 'distance between 0,-180 and 0,180' test
 
@@ -356,42 +349,44 @@ void main() {
         // direction of whatever shortestPath would do. And in this case, we
         // need to account for the eccentricity of the earth (two different
         // radii, according to the WGS84 definition).
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.laziest),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.lazy),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.shortestPath),
-            closeToPerc(313799, epsPerc));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.longestPath),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.eastward),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p1, p2, lngDir: SegmentDirection.westward),
-            closeToPerc(313799, epsPerc));
-        expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.lazy),
             closeToPerc(39660259, epsPerc));
         expect(
-            compute.distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p1, p2, lngDir: LongitudeDirection.shortestPath),
+            closeToPerc(313799, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.longestPath),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.eastward),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p1, p2, lngDir: LongitudeDirection.westward),
+            closeToPerc(313799, epsPerc));
+        expect(
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyEastward),
+            closeToPerc(39660259, epsPerc));
+        expect(
+            compute.distance(p1, p2,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeToPerc(313799, epsPerc));
 
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.laziest),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.lazy),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.shortestPath),
-            closeToPerc(313799, epsPerc));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.longestPath),
-            closeToPerc(39660259, epsPerc));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.eastward),
-            closeToPerc(313799, epsPerc));
-        expect(compute.distance(p2, p1, lngDir: SegmentDirection.westward),
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.lazy),
             closeToPerc(39660259, epsPerc));
         expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyEastward),
+            compute.distance(p2, p1, lngDir: LongitudeDirection.shortestPath),
+            closeToPerc(313799, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.longestPath),
+            closeToPerc(39660259, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.eastward),
+            closeToPerc(313799, epsPerc));
+        expect(compute.distance(p2, p1, lngDir: LongitudeDirection.westward),
+            closeToPerc(39660259, epsPerc));
+        expect(
+            compute.distance(p2, p1,
+                lngDir: LongitudeDirection.strictlyEastward),
             closeToPerc(313799, epsPerc));
         expect(
-            compute.distance(p2, p1, lngDir: SegmentDirection.strictlyWestward),
+            compute.distance(p2, p1,
+                lngDir: LongitudeDirection.strictlyWestward),
             closeToPerc(39660259, epsPerc));
       }); // end of 'distance between 0,-179 and 0,179' test
 
@@ -400,21 +395,19 @@ void main() {
         final p1 = LatLng(0.0, 0.0);
         final p2 = LatLng(0.0, -45.0);
 
-        expect(distance(p1, p2, lngDir: SegmentDirection.laziest),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.lazy),
             closeToPerc(5009377, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.lazy),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.shortestPath),
             closeToPerc(5009377, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.shortestPath),
-            closeToPerc(5009377, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.longestPath),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.longestPath),
             closeToPerc(34931276, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.eastward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.eastward),
             closeToPerc(34931276, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.westward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.westward),
             closeToPerc(5009377, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyEastward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.strictlyEastward),
             closeToPerc(34931276, epsPerc));
-        expect(distance(p1, p2, lngDir: SegmentDirection.strictlyWestward),
+        expect(distance(p1, p2, lngDir: LongitudeDirection.strictlyWestward),
             closeToPerc(5009377, epsPerc));
       }); // end of 'distance between 0,0 and 0,-45' test
     }); // End of 'Haversine' group
