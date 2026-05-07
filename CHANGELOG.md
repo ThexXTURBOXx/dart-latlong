@@ -3,6 +3,7 @@
 - Renamed `SegmentDirection` -> `LongitudeDirection`
 - Renamed `effectiveDLng` -> `effectiveLongitudinalDelta`
 - Removed `laziest` direction (did not really make sense either way...)
+- Improved a few exceptions
 
 ## [1.0.0-dev.1]
 

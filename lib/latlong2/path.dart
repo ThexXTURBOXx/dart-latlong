@@ -115,8 +115,8 @@ class Path<T extends LatLng> {
 
     final baseLength = distance;
     if (baseLength < stepDistance) {
-      throw ArgumentError(
-          'Path distance must be at least ${stepDistance}mn (step distance) but was $baseLength');
+      throw ArgumentError.value(baseLength, 'baseLength',
+          'Path distance must be at least ${stepDistance}mn (step distance)');
     }
 
     if (stepDistance > baseLength / 2) {

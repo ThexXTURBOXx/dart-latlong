@@ -127,7 +127,7 @@ double sexagesimal2decimal(final String str) {
     final frac = double.parse(m[4]!);
     return deg + min / 60 + sec / (60 * 60) + frac / (60 * 60 * 100);
   } else {
-    throw 'Invalid sexagesimal: $str';
+    throw ArgumentError.value(str, 'str', 'Invalid sexagesimal');
   }
 }
 

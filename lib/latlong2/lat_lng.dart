@@ -74,7 +74,8 @@ class LatLng {
         // try format '''N 47°08'52.57" W 8°32'09.04"'''
         splits = str.split('W');
         if (splits.length != 2) {
-          throw 'Unsupported sexagesimal format: $str';
+          throw ArgumentError.value(
+              str, 'str', 'Unsupported sexagesimal format');
         }
       }
     }
