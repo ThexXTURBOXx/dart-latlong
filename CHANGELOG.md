@@ -1,3 +1,9 @@
+## [1.0.0-dev.2]
+
+- Renamed `SegmentDirection` -> `LongitudeDirection`
+- Renamed `effectiveDLng` -> `effectiveLongitudinalDelta`
+- Removed `laziest` direction (did not really make sense either way...)
+
 ## [1.0.0-dev.1]
 
 - Added `SegmentDirection` interface for specifying in which direction distances should be calculated
