@@ -17,8 +17,6 @@
  * limitations under the License.
  */
 
-import 'dart:math';
-
 import 'package:latlong2/latlong2.dart';
 import 'package:latlong2/spline.dart';
 
@@ -35,7 +33,7 @@ typedef LatLngFactory = LatLng Function(double latitude, double longitude);
 LatLng _defaultLatLngFactory(final double latitude, final double longitude) =>
     LatLng(latitude, longitude);
 
-/// Path of [LatLng] values
+/// Path of [LatLng] values that implements [Iterable<T>] for collection manipulation.
 ///
 /// If you use [Path] with Generics - check out this sample:
 ///
@@ -45,42 +43,99 @@ LatLng _defaultLatLngFactory(final double latitude, final double longitude) =>
 ///
 ///     final Path<Location> path = Path<Location>(factory: locationFactory);
 ///
-class Path<T extends LatLng> {
-  /// Coordinates managed by this class
+class Path<T extends LatLng> extends Iterable<T> {
+  /// Coordinates managed by this class.
   final List<T> _coordinates;
 
-  /// For [Distance] calculations
-  final Distance _distance = const Distance();
+  /// For [Distance] calculations.
+  final Distance _distance;
 
+  /// Factory to instantiate new coordinates.
   final LatLngFactory _latLngFactory;
 
-  Path({final LatLngFactory factory = _defaultLatLngFactory})
-      : _coordinates = [],
-        _latLngFactory = factory;
+  /// Creates an empty path with optional [factory] and [distance] calculator.
+  Path({
+    final LatLngFactory factory = _defaultLatLngFactory,
+    final Distance distance = const Distance(),
+  })  : _coordinates = [],
+        _latLngFactory = factory,
+        _distance = distance;
 
-  Path.from(final Iterable<T> coordinates,
-      {final LatLngFactory factory = _defaultLatLngFactory})
-      : _coordinates = List<T>.from(coordinates),
-        _latLngFactory = factory;
+  /// Creates a path from an iterable of [coordinates] with optional [factory] and [distance] calculator.
+  Path.from(
+    final Iterable<T> coordinates, {
+    final LatLngFactory factory = _defaultLatLngFactory,
+    final Distance distance = const Distance(),
+  })  : _coordinates = List<T>.from(coordinates),
+        _latLngFactory = factory,
+        _distance = distance;
 
+  /// Returns the list of coordinates managed by this path.
   List<T> get coordinates => _coordinates;
 
-  /// Removes all coordinates from path
+  /// The distance calculator configured for this path.
+  Distance get distanceCalculator => _distance;
+
+  /// Removes all coordinates from the path.
   void clear() => _coordinates.clear();
 
-  /// Add new [T] coordinate to path
+  /// Adds a new coordinate [value] to the path.
   void add(final T value) {
-    return _coordinates.add(value);
+    _coordinates.add(value);
   }
 
-  /// Add all coordinates from [List<T>] to path
-  void addAll(final List<T> values) {
-    return _coordinates.addAll(values);
+  /// Adds all coordinates from [values] to the path.
+  void addAll(final Iterable<T> values) {
+    _coordinates.addAll(values);
   }
 
+  /// Returns the first coordinate in the path.
+  @override
   T get first => _coordinates.first;
 
+  /// Returns the last coordinate in the path.
+  @override
   T get last => _coordinates.last;
+
+  /// Returns the number of coordinates in the path.
+  @override
+  int get length => _coordinates.length;
+
+  /// Returns true if the path contains no coordinates.
+  @override
+  bool get isEmpty => _coordinates.isEmpty;
+
+  /// Returns true if the path contains one or more coordinates.
+  @override
+  bool get isNotEmpty => _coordinates.isNotEmpty;
+
+  /// Returns an iterator over the path coordinates.
+  @override
+  Iterator<T> get iterator => _coordinates.iterator;
+
+  /// Returns the coordinate at the specified [index].
+  T operator [](final int index) => _coordinates[index];
+
+  /// Sets the coordinate at the specified [index] to [value].
+  void operator []=(final int index, final T value) {
+    _coordinates[index] = value;
+  }
+
+  /// Removes [value] from the path.
+  bool remove(Object? value) => _coordinates.remove(value);
+
+  /// Removes and returns the coordinate at the specified [index].
+  T removeAt(int index) => _coordinates.removeAt(index);
+
+  /// Inserts [element] at the specified [index].
+  void insert(int index, T element) => _coordinates.insert(index, element);
+
+  /// Inserts all [iterable] elements at the specified [index].
+  void insertAll(int index, Iterable<T> iterable) =>
+      _coordinates.insertAll(index, iterable);
+
+  /// Returns a sublist of coordinates from [start] to [end].
+  List<T> sublist(int start, [int? end]) => _coordinates.sublist(start, end);
 
   /// Splits the path into even sections.
   ///
@@ -127,11 +182,12 @@ class Path<T extends LatLng> {
 
     // no steps possible - so return an empty path
     if (baseLength == stepDistance) {
-      return Path.from([_coordinates.first, _coordinates.last]);
+      return Path.from([_coordinates.first, _coordinates.last],
+          factory: _latLngFactory, distance: _distance);
     }
 
     final tempCoordinates = List<T>.from(_coordinates);
-    final path = Path();
+    final path = Path(factory: _latLngFactory, distance: _distance);
 
     var remainingSteps = 0.0;
     double bearing;
@@ -231,69 +287,41 @@ class Path<T extends LatLng> {
     return path;
   }
 
-  /// Sums up all the distances on the path
+  /// Sums up all the distances on the path using [LongitudeDirection.greenwich].
   ///
   ///     final Path path = Path.from(route);
   ///     print(path.distance);
   ///
-  double get distance {
+  double get distance => distanceWith(lngDir: LongitudeDirection.greenwich);
+
+  /// Sums up all the distances on the path using the specified [lngDir].
+  double distanceWith(
+      {final LongitudeDirection lngDir = LongitudeDirection.greenwich}) {
     final tempCoordinates = List<T>.from(_coordinates);
     var length = 0.0;
 
     for (var index = 0; index < coordinates.length - 1; index++) {
-      length += _distance(tempCoordinates[index], tempCoordinates[index + 1]);
+      length += _distance.distance(
+          tempCoordinates[index], tempCoordinates[index + 1],
+          lngDir: lngDir);
     }
     return round(length);
   }
 
-  /// Calculates the center of a collection of geo coordinates
-  ///
-  /// The function rounds the result to 6 decimals
-  LatLng get center {
+  /// Returns the geographical bounding box ([LatLngBounds]) of the path coordinates.
+  LatLngBounds get bounds {
     if (coordinates.isEmpty) {
       throw AssertionError('Coordinates must not be empty!');
     }
-
-    var X = 0.0;
-    var Y = 0.0;
-    var Z = 0.0;
-
-    double lat, lon, hyp;
-
-    for (final coordinate in coordinates) {
-      lat = coordinate.latitudeInRad;
-      lon = coordinate.longitudeInRad;
-
-      X += cos(lat) * cos(lon);
-      Y += cos(lat) * sin(lon);
-      Z += sin(lat);
-    }
-
-    final nrOfCoordinates = coordinates.length;
-    X = X / nrOfCoordinates;
-    Y = Y / nrOfCoordinates;
-    Z = Z / nrOfCoordinates;
-
-    lon = atan2(Y, X);
-    hyp = sqrt(X * X + Y * Y);
-    lat = atan2(Z, hyp);
-
-    return _latLngFactory(round(radianToDeg(lat)), round(radianToDeg(lon)));
+    return LatLngBounds.fromPoints(_coordinates);
   }
 
-  /// Returns the number of coordinates
+  /// Returns the number of coordinates in the path.
   ///
   ///     final Path path = Path.from(<LatLng>[ startPos,endPos ]);
   ///     final int nr = path.nrOfCoordinates; // nr == 2
   ///
   int get nrOfCoordinates => _coordinates.length;
-
-  /// Returns the [LatLng] coordinate form [index]
-  ///
-  ///     final Path path = Path.from(<LatLng>[ startPos,endPos ]);
-  ///     final LatLng p1 = path[0]; // p1 == startPos
-  ///
-  T operator [](final int index) => _coordinates.elementAt(index);
 
   //- private -----------------------------------------------------------------------------------
 

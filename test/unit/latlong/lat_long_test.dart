@@ -103,6 +103,40 @@ void main() {
       expect(coords.latitude, isNot(0.0));
       expect(coords.longitude, isNot(80.0));
     }); // end of 'equal' test
+
+    test('> WorldLatLng and wrapping', () {
+      final p1 = WorldLatLng(0.0, 10.0);
+      expect(p1.worldNumber, 0);
+      expect(p1.longitude, 10.0);
+      expect(p1.localLongitude, 10.0);
+
+      final p2 = WorldLatLng(0.0, 500.0);
+      expect(p2.worldNumber, 1);
+      expect(p2.longitude, 500.0);
+      expect(p2.localLongitude, 140.0);
+
+      final p3 = WorldLatLng.inWorld(0.0, 10.0, worldNumber: 1);
+      expect(p3.worldNumber, 1);
+      expect(p3.longitude, 370.0);
+      expect(p3.localLongitude, 10.0);
+
+      final normal = LatLng(10.0, 20.0);
+      final worldPoint = normal.toWorldIn(worldNumber: 2);
+      expect(worldPoint.worldNumber, 2);
+      expect(worldPoint.localLongitude, 20.0);
+      expect(worldPoint.longitude, 740.0);
+
+      final backToNormal = worldPoint.toLatLng();
+      expect(backToNormal, normal);
+
+      final unspooled = LatLng(10.0, 500.0);
+      final unspooledWorld = unspooled.toWorld();
+      expect(unspooledWorld.worldNumber, 1);
+      expect(unspooledWorld.longitude, 500.0);
+
+      final absLatLng = unspooledWorld.toAbsoluteLatLng();
+      expect(absLatLng.longitude, 500.0);
+    });
   });
 }
 

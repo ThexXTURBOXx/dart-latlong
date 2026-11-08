@@ -203,18 +203,40 @@ void main() {
               decimals: 3),
           3.377);
     }); // end of 'Path length should be 3.377km' test
+
+    test('> Path as Iterable and List operations', () {
+      final path = Path.from([LatLng(0, 0), LatLng(1, 1)]);
+      expect(path.length, 2);
+      expect(path.isEmpty, false);
+      expect(path.isNotEmpty, true);
+      expect(path.first, LatLng(0, 0));
+      expect(path.last, LatLng(1, 1));
+
+      // Iterable methods
+      final l = path.map((p) => p.latitude).toList();
+      expect(l, [0.0, 1.0]);
+
+      // Mutation methods
+      path.add(LatLng(2, 2));
+      expect(path.length, 3);
+      path[0] = LatLng(-1, -1);
+      expect(path[0], LatLng(-1, -1));
+
+      path.removeAt(0);
+      expect(path.length, 2);
+
+      // distanceWith and custom Distance
+      final customPath = Path.from([LatLng(0, 0), LatLng(0, 1)],
+          distance: Distance(calculator: Haversine()));
+      expect(customPath.distanceCalculator, isA<Distance>());
+      expect(customPath.distanceWith(lngDir: LongitudeDirection.shortestPath),
+          greaterThan(0));
+
+      // bounds
+      final bounds = path.bounds;
+      expect(bounds, isA<LatLngBounds>());
+    });
   }); // End of 'PathLength' group
-
-  group('Center', () {
-    test(
-        '> Center between Berlin and Moscow should be near Minsk '
-        '(54.743683,25.033239)', () {
-      final path = Path.from([cities['berlin']!, cities['moscow']!]);
-
-      expect(path.center.latitude, 54.743683);
-      expect(path.center.longitude, 25.033239);
-    }); // end of 'Center' test
-  }); // End of 'Center' group
 
   group('Utils', () {
     setUp(() {});

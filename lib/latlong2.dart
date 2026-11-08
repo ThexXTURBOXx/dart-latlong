@@ -48,6 +48,7 @@ export 'src/latlong2/circle.dart';
 export 'src/latlong2/distance.dart';
 export 'src/latlong2/interfaces.dart';
 export 'src/latlong2/lat_lng.dart';
+export 'src/latlong2/lat_lng_bounds.dart';
 export 'src/latlong2/length_unit.dart';
 export 'src/latlong2/path.dart';
 
