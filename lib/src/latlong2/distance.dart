@@ -153,10 +153,8 @@ class DistanceVincenty extends Distance {
       : super(calculator: const Vincenty());
 
   /// Radius must be greater than 0.
-  DistanceVincenty.withRadius(final double radius,
-      {final bool roundResult = true})
-      : super.withRadius(radius,
-            roundResult: roundResult, calculator: const Vincenty()) {
+  DistanceVincenty.withRadius(final double radius, {super.roundResult})
+      : super.withRadius(radius, calculator: const Vincenty()) {
     if (radius <= 0) {
       throw ArgumentError.value(
           radius, 'radius', 'Radius must be greater than 0');
@@ -172,10 +170,8 @@ class DistanceHaversine extends Distance {
       : super(calculator: const Haversine());
 
   /// Radius must be greater than 0.
-  DistanceHaversine.withRadius(final double radius,
-      {final bool roundResult = true})
-      : super.withRadius(radius,
-            roundResult: roundResult, calculator: const Haversine()) {
+  DistanceHaversine.withRadius(final double radius, {super.roundResult})
+      : super.withRadius(radius, calculator: const Haversine()) {
     if (radius <= 0) {
       throw ArgumentError.value(
           radius, 'radius', 'Radius must be greater than 0');
